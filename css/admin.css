@@ -1,0 +1,128 @@
+/******************************************************************************
+ *                                                                            *
+ *    This file is part of RPB Chessboard, a Wordpress plugin.                *
+ *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *                                                                            *
+ *    This program is free software: you can redistribute it and/or modify    *
+ *    it under the terms of the GNU General Public License as published by    *
+ *    the Free Software Foundation, either version 3 of the License, or       *
+ *    (at your option) any later version.                                     *
+ *                                                                            *
+ *    This program is distributed in the hope that it will be useful,         *
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
+ *    GNU General Public License for more details.                            *
+ *                                                                            *
+ *    You should have received a copy of the GNU General Public License       *
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
+ *                                                                            *
+ ******************************************************************************/
+
+
+/******************************************************************************/
+/*** Miscellaneous ***/
+
+#rpbchessboard-admin-icon {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+
+/******************************************************************************/
+/*** Column layout ***/
+
+.rpbchessboard-admin-columns {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.rpbchessboard-admin-column-left,
+.rpbchessboard-admin-column-right {
+	display: table-cell;
+	vertical-align: top;
+}
+
+.rpbchessboard-admin-column-left {
+	padding-right: 10px;
+}
+
+.rpbchessboard-admin-column-right {
+	padding-left: 10px;
+}
+
+
+
+/******************************************************************************/
+/*** Memo tab ***/
+
+.rpbchessboard-admin-code-block,
+.rpbchessboard-admin-code-inline {
+	font-family: Consolas, Monaco, monospace;
+}
+
+.rpbchessboard-admin-code-block {
+	border: solid 1px #c0c0ff;
+	background-color: #f0f0ff;
+	padding: 8px 10px 8px;
+}
+
+.rpbchessboard-admin-visu-block {
+	border: solid 1px #bbb;
+	background-color: white;
+	margin-right : 5px;
+	margin-bottom: 5px;
+	box-shadow: 5px 5px 3px #888;
+	padding: 5px 15px 5px;
+	font-family: Times, serif;
+	font-size  : 17px;
+	line-height: 1.3em;
+}
+
+#rpbchessboard-admin-memo .rpbchessboard-admin-column-left {
+	width: 50%;
+}
+
+#rpbchessboard-admin-memo .rpbchessboard-admin-column-right {
+	width: 50%;
+}
+
+
+
+/******************************************************************************/
+/*** Options tab ***/
+
+#rpbchessboard-admin-options .rpbchessboard-admin-column-left {
+	width: 250px;
+}
+
+#rpbchessboard-admin-squareSize {
+	text-align: right;
+}
+
+
+
+/******************************************************************************/
+/*** About tab ***/
+
+#rpbchessboard-admin-translator-list {
+	display: table;
+}
+
+#rpbchessboard-admin-translator-list div {
+	display: table-row;
+}
+
+#rpbchessboard-admin-translator-list dt,
+#rpbchessboard-admin-translator-list dd {
+	display: table-cell;
+}
+
+#rpbchessboard-admin-translator-list dd {
+	padding-left: 15px;
+}
+
+#rpbchessboard-admin-translator-list img {
+	vertical-align: middle;
+}
