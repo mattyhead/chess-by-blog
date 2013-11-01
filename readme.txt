@@ -19,15 +19,15 @@ in the posts and pages of your Wordpress blog,
 using the standard [FEN](http://en.wikipedia.org/wiki/Forsyth-Edwards_Notation)
 and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 
-= Examples =
+**Examples**
 
-``
+`
 The initial position:
 
 [fen]rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1[/fen]
-``
+`
 
-``
+`
 [pgn]
 
 [Site "Vienna"]
@@ -42,9 +42,9 @@ The initial position:
 20. Kd1 Qxh1+ 21. Kd2 Qg2+ 22. Ke1 Ng1 23. Nc3 Bxc3+ 24. bxc3 Qe2# 0-1
 
 [/pgn]
-``
+`
 
-= Features =
+**Features**
 
  * customizable aspect for the chessboards (size, coordinates, etc...),
  * support comments and sub-variations in PGN-encoded games,
