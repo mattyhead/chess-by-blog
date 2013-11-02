@@ -22,8 +22,6 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 **Examples**
 
 `
-The initial position:
-
 [fen]rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1[/fen]
 `
 
@@ -76,10 +74,18 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 1. Typesetting and rendering a chess diagram.
 2. Typesetting and rendering a chess game with comments and sub-variations.
+3. Chess diagram in a post with the Twenty Ten theme.
+4. Chess game in a post with the Twenty Ten theme.
+5. When clicking on a move, a popup frame is displayed, showing the corresponding position.
+6. Chess game with comments and sub-variations.
 
 
 
 == Changelog ==
+
+= 1.99.4 =
+* Clean the credits page in the backend.
+* Fix: missing theming for the jQuery widgets in the backend.
 
 = 1.99.3 =
 * Fix: use the WP theming for jQuery dialogs to avoid conflicts between CSS.
