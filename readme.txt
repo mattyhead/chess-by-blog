@@ -45,9 +45,9 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 
 **Features**
 
- * customizable aspect for the chessboards (size, coordinates, etc...),
- * support comments and sub-variations in PGN-encoded games,
- * support HTML formatting in PGN comments.
+ * Customizable aspect for the chessboards (size, coordinates, etc...).
+ * Support commentaries and sub-variations in PGN-encoded games.
+ * Support HTML formatting in PGN commentaries.
 
 If you encounter some bugs with this plugin, or if you wish to get new features
 in the future versions, you can report/propose them in the bug tracker at
@@ -73,15 +73,18 @@ please have a look to the general [plugin management page](http://codex.wordpres
 == Screenshots ==
 
 1. Typesetting and rendering a chess diagram.
-2. Typesetting and rendering a chess game with comments and sub-variations.
+2. Typesetting and rendering a chess game with commentaries and sub-variations.
 3. Chess diagram in a post with the Twenty Ten theme.
 4. Chess game in a post with the Twenty Ten theme.
 5. When clicking on a move, a popup frame is displayed, showing the corresponding position.
-6. Chess game with comments and sub-variations.
+6. Chess game with commentaries and sub-variations.
 
 
 
 == Changelog ==
+
+= 1.99.6 =
+* Documentation for the PGN tag.
 
 = 1.99.5 =
 * Fix issue #1.
