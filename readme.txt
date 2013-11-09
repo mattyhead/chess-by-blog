@@ -45,7 +45,7 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 
 **Features**
 
- * Customizable aspect for the chessboards (size, coordinates, etc...).
+ * Customizable aspect for the chessboards (orientation, size, etc...).
  * Support commentaries and sub-variations in PGN-encoded games.
  * Support HTML formatting in PGN commentaries.
 
@@ -82,6 +82,10 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 
 == Changelog ==
+
+= 2.0 =
+* Add: flip attribute (to change the orientation of the chessboards).
+* Auto-size the chessbard in the navigation frame generated with [pgn][/pgn].
 
 = 1.99.6 =
 * Documentation for the PGN tag.
