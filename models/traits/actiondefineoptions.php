@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -37,11 +37,10 @@ class RPBChessboardTraitActionDefineOptions extends RPBChessboardAbstractActionT
 			update_option('rpbchessboard_squareSize', $value);
 		}
 
-		// Set the show-coordinates parameter
-		$value = $this->getPostShowCoordinates();
-		if(!is_null($value)) {
-			update_option('rpbchessboard_showCoordinates', $value ? 1 : 0);
-		}
+		// Set the boolean parameters
+		$this->updateBooleanParameter('showCoordinates'     , $this->getPostShowCoordinates     ());
+		$this->updateBooleanParameter('fenCompatibilityMode', $this->getPostFENCompatibilityMode());
+		$this->updateBooleanParameter('pgnCompatibilityMode', $this->getPostPGNCompatibilityMode());
 	}
 
 
@@ -68,12 +67,60 @@ class RPBChessboardTraitActionDefineOptions extends RPBChessboardAbstractActionT
 	 */
 	public function getPostShowCoordinates()
 	{
-	if(array_key_exists('showCoordinates', $_POST)) {
-			$value = RPBChessboardHelperValidation::prefilterBooleanFromInt($_POST['showCoordinates']);
-			return RPBChessboardHelperValidation::validateShowCoordinates($value);
+		return $this->getPostBooleanParameter('showCoordinates');
+	}
+
+
+	/**
+	 * New FEN-compatibility-mode parameter.
+	 *
+	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
+	 */
+	public function getPostFENCompatibilityMode()
+	{
+		return $this->getPostBooleanParameter('fenCompatibilityMode');
+	}
+
+
+	/**
+	 * New PGN-compatibility-mode parameter.
+	 *
+	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
+	 */
+	public function getPostPGNCompatibilityMode()
+	{
+		return $this->getPostBooleanParameter('pgnCompatibilityMode');
+	}
+
+
+	/**
+	 * Return and validate a boolean post parameter with the given name.
+	 *
+	 * @param string $paramName Name of the parameter to return.
+	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
+	 */
+	private function getPostBooleanParameter($paramName)
+	{
+		if(array_key_exists($paramName, $_POST)) {
+			return RPBChessboardHelperValidation::validateBooleanFromInt($_POST[$paramName]);
 		}
 		else {
 			return null;
 		}
+	}
+
+
+	/**
+	 * Update a global boolean parameter.
+	 *
+	 * @param string $key Name of the parameter in the dedicated WP table.
+	 * @param boolean $value New value (if null, nothing happens).
+	 */
+	private function updateBooleanParameter($key, $value)
+	{
+		if(is_null($value)) {
+			return;
+		}
+		update_option('rpbchessboard_' . $key, $value ? 1 : 0);
 	}
 }

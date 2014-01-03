@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -42,18 +42,6 @@ abstract class RPBChessboardHelperValidation
 
 
 	/**
-	 * Validate a chessboard widget flip-board parameter.
-	 *
-	 * @param mixed $value
-	 * @return boolean May be null is the value is not valid.
-	 */
-	public static function validateFlip($value)
-	{
-		return (is_null($value) || $value==='') ? null : filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-	}
-
-
-	/**
 	 * Validate a chessboard widget square size parameter.
 	 *
 	 * @param mixed $value
@@ -74,12 +62,12 @@ abstract class RPBChessboardHelperValidation
 
 
 	/**
-	 * Validate a chessboard widget show-coordinates parameter.
+	 * Validate a boolean.
 	 *
 	 * @param mixed $value
 	 * @return boolean May be null is the value is not valid.
 	 */
-	public static function validateShowCoordinates($value)
+	public static function validateBoolean($value)
 	{
 		return (is_null($value) || $value==='') ? null : filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 	}
@@ -91,7 +79,7 @@ abstract class RPBChessboardHelperValidation
 	 * @param mixed $value
 	 * @return boolean May be null is the value is not valid.
 	 */
-	public static function prefilterBooleanFromInt($value)
+	public static function validateBooleanFromInt($value)
 	{
 		$value = filter_var($value, FILTER_VALIDATE_INT);
 		if     ($value===0) return false;

@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -21,9 +21,6 @@
 ?>
 
 <h2>
-	<div id="rpbchessboard-admin-icon">
-		<img src="<?php echo RPBCHESSBOARD_URL.'/images/admin.png'; ?>" />
-	</div>
 	<?php
 		echo __('Chess games and diagrams', 'rpbchessboard') . ' &ndash; ' .
 			htmlspecialchars($model->getTitle());

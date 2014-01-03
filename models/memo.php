@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -28,6 +28,12 @@ require_once(RPBCHESSBOARD_ABSPATH.'models/abstractadminmodel.php');
  */
 class RPBChessboardModelMemo extends RPBChessboardAbstractAdminModel
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->loadTrait('Compatibility');
+	}
+
 	public function getTitle()
 	{
 		return __('Memo', 'rpbchessboard');

@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -26,7 +26,7 @@ Description: This plugin allows you to typeset and display chess diagrams and PG
 Text Domain: rpbchessboard
 Author: Yoann Le Montagner
 License: GPLv3
-Version: 2.0.1
+Version: 2.1
 */
 
 

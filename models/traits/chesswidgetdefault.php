@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -68,8 +68,7 @@ class RPBChessboardTraitChessWidgetDefault extends RPBChessboardAbstractTrait
 	public function getDefaultShowCoordinates()
 	{
 		if(is_null($this->showCoordinates)) {
-			$value = RPBChessboardHelperValidation::prefilterBooleanFromInt(get_option('rpbchessboard_showCoordinates'));
-			$value = RPBChessboardHelperValidation::validateShowCoordinates($value);
+			$value = RPBChessboardHelperValidation::validateBooleanFromInt(get_option('rpbchessboard_showCoordinates'));
 			$this->showCoordinates = is_null($value) ? self::DEFAULT_SHOW_COORDINATES : $value;
 		}
 		return $this->showCoordinates;

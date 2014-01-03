@@ -24,19 +24,16 @@ require_once(RPBCHESSBOARD_ABSPATH.'controllers/abstractcontroller.php');
 
 
 /**
- * Controller for the backend.
+ * Controller for the frontend.
  */
-class RPBChessboardControllerAdmin extends RPBChessboardAbstractController
+class RPBChessboardControllerSite extends RPBChessboardAbstractController
 {
 	/**
 	 * Constructor
-	 *
-	 * @param string $modelName Name of the model to use. It is supposed to refer
-	 *        to a model that inherits from the class RPBChessboardAbstractAdminModel.
 	 */
-	public function __construct($modelName)
+	public function __construct()
 	{
-		parent::__construct($modelName);
+		parent::__construct('Site');
 	}
 
 
@@ -48,18 +45,61 @@ class RPBChessboardControllerAdmin extends RPBChessboardAbstractController
 		// Load the model
 		$model = $this->getModel();
 
-		// Process the post-action, if any.
-		$action = $model->getPostAction();
-		if(!is_null($action)) {
-			$model->loadTrait('Action' . $action);
-			$model->processRequest();
-		}
+		// Register the shortcodes
+		add_shortcode($model->getFENShortcode(), array('RPBChessboardControllerSite', 'runShortcodeFen'       ));
+		add_shortcode('pgndiagram'             , array('RPBChessboardControllerSite', 'runShortcodePgnDiagram'));
+		add_shortcode($model->getPGNShortcode(), array('RPBChessboardControllerSite', 'runShortcodePgn'       ));
+	}
 
-		// Create the view
-		require_once(RPBCHESSBOARD_ABSPATH.'views/admin.php');
-		$view = new RPBChessboardViewAdmin($model);
+
+	/**
+	 * Callback method for the [fen][/fen] shortcode.
+	 */
+	public static function runShortcodeFen($atts, $content)
+	{
+		return self::runShortcode('Fen', $atts, $content);
+	}
+
+
+	/**
+	 * Callback method for the [pgndiagram] shortcode.
+	 */
+	public static function runShortcodePgnDiagram($atts)
+	{
+		return self::runShortcode('PgnDiagram', $atts, '');
+	}
+
+
+	/**
+	 * Callback method for the [pgn][/pgn] shortcode.
+	 */
+	public static function runShortcodePgn($atts, $content)
+	{
+		return self::runShortcode('Pgn', $atts, $content);
+	}
+
+
+	/**
+	 * Generic callback method for the shortcodes.
+	 */
+	private static function runShortcode($modelName, $atts, $content)
+	{
+		// Load the model
+		$fileName  = strtolower($modelName);
+		$className = 'RPBChessboardModel' . $modelName;
+		require_once(RPBCHESSBOARD_ABSPATH.'models/'.$fileName.'.php');
+		$model = new $className($atts, $content);
+
+		// Load the view
+		$viewName  = $model->getViewName();
+		$fileName  = strtolower($viewName);
+		$className = 'RPBChessboardView' . $viewName;
+		require_once(RPBCHESSBOARD_ABSPATH.'views/'.$fileName.'.php');
+		$view = new $className($model);
 
 		// Display the view
+		ob_start();
 		$view->display();
+		return ob_get_clean();
 	}
 }

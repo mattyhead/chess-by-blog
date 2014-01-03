@@ -28,69 +28,62 @@ require_once(RPBCHESSBOARD_ABSPATH.'helpers/validation.php');
  * Trait for loading the options controlling the aspect of chessboard widgets
  * and passed by a short-code attribute.
  */
-class RPBChessboardTraitChessWidgetCustom extends RPBChessboardAbstractTrait
+class RPBChessboardTraitCompatibility extends RPBChessboardAbstractTrait
 {
-	private $atts;
-	private $flipDefined            = false;
-	private $squareSizeDefined      = false;
-	private $showCoordinatesDefined = false;
-	private $flip           ;
-	private $squareSize     ;
-	private $showCoordinates;
+	private $fenCompatibilityMode = null;
+	private $pgnCompatibilityMode = null;
 
 
 	/**
-	 * Constructor.
+	 * Whether the compatibility mode is activated or not for the [fen][/fen] shortcode
+	 * (which means that [fen_compat][/fen_compat] would be used instead).
 	 *
-	 * @param array $atts
+	 * @return boolean
 	 */
-	public function __construct($atts)
+	public function getFENCompatibilityMode()
 	{
-		$this->atts = $atts;
+		if(is_null($this->fenCompatibilityMode)) {
+			$value = RPBChessboardHelperValidation::validateBooleanFromInt(get_option('rpbchessboard_fenCompatibilityMode'));
+			$this->fenCompatibilityMode = is_null($value) ? false : $value;
+		}
+		return $this->fenCompatibilityMode;
 	}
 
 
 	/**
-	 * Custom flip-board parameter for the chessboard widgets.
+	 * Whether the compatibility mode is activated or not for the [pgn][/pgn] shortcode
+	 * (which means that [pgn_compat][/pgn_compat] would be used instead).
 	 *
-	 * @return boolean May be null if this parameter is let undefined.
+	 * @return boolean
 	 */
-	public function getCustomFlip()
+	public function getPGNCompatibilityMode()
 	{
-		if(!$this->flipDefined) {
-			$this->flip = RPBChessboardHelperValidation::validateBoolean($this->atts['flip']);
-			$this->flipDefined = true;
+		if(is_null($this->pgnCompatibilityMode)) {
+			$value = RPBChessboardHelperValidation::validateBooleanFromInt(get_option('rpbchessboard_pgnCompatibilityMode'));
+			$this->pgnCompatibilityMode = is_null($value) ? false : $value;
 		}
-		return $this->flip;
+		return $this->pgnCompatibilityMode;
 	}
 
 
 	/**
-	 * Custom square size for the chessboard widgets.
+	 * Return the shortcode to use for FEN diagrams.
 	 *
-	 * @return int May be null if this parameter is let undefined.
+	 * @return string
 	 */
-	public function getCustomSquareSize()
+	public function getFENShortcode()
 	{
-		if(!$this->squareSizeDefined) {
-			$this->squareSize = RPBChessboardHelperValidation::validateSquareSize($this->atts['square_size']);
-			$this->squareSizeDefined = true;
-		}
-		return $this->squareSize;
+		return $this->getFENCompatibilityMode() ? 'fen_compat' : 'fen';
 	}
 
 
 	/**
-	 * Custom show-coordinates parameter for the chessboard widgets.
+	 * Return the shortcode to use for PGN games.
 	 *
-	 * @return boolean May be null if this parameter is let undefined.
+	 * @return string
 	 */
-	public function getCustomShowCoordinates()
+	public function getPGNShortcode()
 	{
-		if(!$this->showCoordinatesDefined) {
-			$this->showCoordinates = RPBChessboardHelperValidation::validateBoolean($this->atts['show_coordinates']);
-			$this->showCoordinatesDefined = true;
-		}
-		return $this->showCoordinates;
+		return $this->getPGNCompatibilityMode() ? 'pgn_compat' : 'pgn';
 	}
 }

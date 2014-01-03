@@ -1,7 +1,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -21,11 +21,6 @@
 
 /******************************************************************************/
 /*** Miscellaneous ***/
-
-#rpbchessboard-admin-icon {
-	display: inline-block;
-	vertical-align: middle;
-}
 
 
 
@@ -120,11 +115,12 @@
 .rpbchessboard-admin-code-block,
 .rpbchessboard-admin-code-inline {
 	font-family: Consolas, Monaco, monospace;
+	font-style : normal;
 }
 
 .rpbchessboard-admin-code-block {
-	border: solid 1px #c0c0ff;
-	background-color: #f0f0ff;
+	border: solid 1px #bbb;
+	background-color: #ffffe0;
 	padding: 8px 10px 8px;
 	margin-bottom: 1em;
 }
@@ -139,6 +135,12 @@
 	font-family: Times, serif;
 	font-size  : 17px;
 	line-height: 1.3em;
+}
+
+.rpbchessboard-admin-visu-block p {
+	font-family: inherit;
+	font-size  : inherit;
+	line-height: inherit;
 }
 
 

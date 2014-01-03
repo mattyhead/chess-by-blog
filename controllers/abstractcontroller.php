@@ -2,7 +2,7 @@
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013  Yoann Le Montagner <yo35 -at- melix.net>            *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -50,21 +50,9 @@ abstract class RPBChessboardAbstractController
 			$fileName  = strtolower($modelName);
 			$className = 'RPBChessboardModel' . $modelName;
 			require_once(RPBCHESSBOARD_ABSPATH.'models/'.$fileName.'.php');
-			$this->model = $this->loadModel($className);
+			$this->model = new $className();
 		}
 		return $this->model;
-	}
-
-
-	/**
-	 * Instantiate a model object.
-	 *
-	 * @param string $className Class name of the model to instantiate.
-	 * @return RPBChessboardAbstractModel
-	 */
-	protected function loadModel($className)
-	{
-		return new $className();
 	}
 
 
