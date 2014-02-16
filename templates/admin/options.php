@@ -110,24 +110,6 @@
 			var showCoordinates;
 
 
-			// Refresh the tuning widget
-			function refreshTuningWidget($)
-			{
-				// Build the option specifier object
-				var options = new ChessWidget.Options(null);
-				options.setSquareSize     (squareSize     );
-				options.setShowCoordinates(showCoordinates);
-
-				// Actual refresh
-				var widget = ChessWidget.make('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', options);
-				$('#rpbchessboard-admin-tuning-widget').empty();
-				$('#rpbchessboard-admin-tuning-widget').append(widget);
-
-				// Additional labels and form fields
-				$('#rpbchessboard-admin-squareSize').val(squareSize);
-			}
-
-
 			// Callback for the squareSize slider
 			function onSquareSizeChange($, newSquareSize)
 			{
@@ -135,7 +117,8 @@
 					return;
 				}
 				squareSize = newSquareSize;
-				refreshTuningWidget($);
+				$('#rpbchessboard-admin-squareSize'   ).val(squareSize);
+				$('#rpbchessboard-admin-tuning-widget').chessboard('option', 'squareSize', squareSize);
 			}
 
 
@@ -146,7 +129,7 @@
 					return;
 				}
 				showCoordinates = newShowCoordinates;
-				refreshTuningWidget($);
+				$('#rpbchessboard-admin-tuning-widget').chessboard('option', 'showCoordinates', showCoordinates);
 			}
 
 
@@ -165,7 +148,6 @@
 					value: squareSize,
 					min: <?php echo json_encode($model->getMinimumSquareSize()); ?>,
 					max: <?php echo json_encode($model->getMaximumSquareSize()); ?>,
-					step: <?php echo json_encode($model->getStepSquareSize()); ?>,
 					slide: function( event, ui ) { onSquareSizeChange($, ui.value); }
 				});
 
@@ -175,7 +157,11 @@
 				});
 
 				// Create the tuning widget
-				refreshTuningWidget($);
+				$('#rpbchessboard-admin-tuning-widget').chessboard({
+					position       : 'start'        ,
+					squareSize     : squareSize     ,
+					showCoordinates: showCoordinates
+				});
 			});
 
 		</script>

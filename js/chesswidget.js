@@ -23,263 +23,48 @@
  * Tools to create chessboard widgets in HTML pages.
  *
  * @author Yoann Le Montagner
- * @namespace ChessWidget
  *
  * @requires chess.js {@link https://github.com/jhlywa/chess.js}
  * @requires jQuery
+ * @requires jQuery UI Widget
+ * @requires jQuery UI Selectable
  */
-ChessWidget = (function(Chess, $)
+(function(Chess, $)
 {
 	/**
 	 * Minimal value for the square-size parameter.
 	 *
 	 * @constant
 	 * @public
-	 * @memberof ChessWidget
 	 */
-	var MINIMUM_SQUARE_SIZE = 24;
+	var MINIMUM_SQUARE_SIZE = 20;
+
 
 	/**
 	 * Maximal value for the square-size parameter.
 	 *
 	 * @constant
 	 * @public
-	 * @memberof ChessWidget
 	 */
 	var MAXIMUM_SQUARE_SIZE = 64;
-
-	/**
-	 * Increment value for the square-size parameter.
-	 *
-	 * @constant
-	 * @public
-	 * @memberof ChessWidget
-	 */
-	var STEP_SQUARE_SIZE = 4;
-
-
-	/**
-	 * @typedef {{squareSize: number, showCoordinates: boolean}} Attributes
-	 * @desc Compact definition of a set of options applicable to a chess widget.
-	 */
-
-	/**
-	 * @constructor
-	 * @alias Options
-	 * @memberof ChessWidget
-	 *
-	 * @classdesc
-	 * Container for options that might affect the appearance of a chess diagram
-	 * in a HTML page.
-	 *
-	 * This structure allows to resolve option values in a hierarchical manner:
-	 * each ChessWidget.Options object holds a reference to a parent
-	 * ChessWidget.Options object; if one option field is undefined in the
-	 * current ChessWidget.Options object, then its value will be determined
-	 * based on the value of the parent ChessWidget.Options object.
-	 *
-	 * @desc Create a new set of options.
-	 *
-	 * @param {ChessWidget.Options} [parent=null]
-	 * @param {ChessWidget.Attributes} [val=null] Pre-defined values for the options.
-	 */
-	function Options(parent, val)
-	{
-		/**
-		 * @member {ChessWidget.Options} _parent
-		 * @memberof ChessWidget.Options
-		 * @instance
-		 * @desc Parent of the current set of options.
-		 * @private
-		 */
-		this._parent = parent;
-
-		/**
-		 * @member {boolean} _flip
-		 * @memberof ChessWidget.Options
-		 * @instance
-		 * @desc Whether the diagram should be represented in a flipped manner.
-		 * @private
-		 */
-		this._flip = null;
-
-		/**
-		 * @member {number} _squareSize
-		 * @memberof ChessWidget.Options
-		 * @instance
-		 * @desc Size of the squares of the diagram (in pixel).
-		 * @private
-		 */
-		this._squareSize = null;
-
-		/**
-		 * @member {boolean} _showCoordinates
-		 * @memberof ChessWidget.Options
-		 * @instance
-		 * @desc Whether the row and column coordinates should be shown in the diagram.
-		 * @private
-		 */
-		this._showCoordinates = null;
-
-		// Default values
-		if(val!=null) {
-			if(val.flip           !=null) this.setFlip           (val.flip           );
-			if(val.squareSize     !=null) this.setSquareSize     (val.squareSize     );
-			if(val.showCoordinates!=null) this.setShowCoordinates(val.showCoordinates);
-		}
-	}
-
-	/**
-	 * Duplicate a ChessWidget.Options object.
-	 *
-	 * @returns {ChessWidget.Options}
-	 */
-	Options.prototype.clone = function()
-	{
-		var retVal = new Options(this._parent);
-		retVal._flip            = this._flip           ;
-		retVal._squareSize      = this._squareSize     ;
-		retVal._showCoordinates = this._showCoordinates;
-		return retVal;
-	};
-
-	/**
-	 * Return the flip-board option value.
-	 *
-	 * @returns {number}
-	 */
-	Options.prototype.getFlip = function()
-	{
-		if(this._flip==null) {
-			return this._parent==null ? false : this._parent.getFlip();
-		}
-		else {
-			return this._flip;
-		}
-	};
-
-	/**
-	 * Return the square-size option value.
-	 *
-	 * @returns {number}
-	 */
-	Options.prototype.getSquareSize = function()
-	{
-		if(this._squareSize==null) {
-			return this._parent==null ? 32 : this._parent.getSquareSize();
-		}
-		else {
-			return this._squareSize;
-		}
-	};
-
-	/**
-	 * Return the show-coordinates option value.
-	 *
-	 * @returns {boolean}
-	 */
-	Options.prototype.getShowCoordinates = function()
-	{
-		if(this._showCoordinates==null) {
-			return this._parent==null ? true : this._parent.getShowCoordinates();
-		}
-		else {
-			return this._showCoordinates;
-		}
-	};
-
-	/**
-	 * Set the flip-board option value.
-	 *
-	 * @param {(boolean|string)} [value=null]
-	 * New value (null means that the value corresponding getter will read
-	 * determine the value from the ChessWidget.Options parent object.
-	 */
-	Options.prototype.setFlip = function(value)
-	{
-		if(value==null) {
-			this._flip = null;
-		}
-		else {
-			if(typeof(value)=="string") {
-				value = value.toLowerCase();
-				if     (value=="true" ) this._flip = true ;
-				else if(value=="false") this._flip = false;
-				else                    this._flip = null ;
-			}
-			else {
-				this._flip = value ? true : false;
-			}
-		}
-	};
-
-	/**
-	 * Set the square-size option value.
-	 *
-	 * @param {(number|string)} [value=null]
-	 * New value (null means that the value corresponding getter will read
-	 * determine the value from the ChessWidget.Options parent object.
-	 */
-	Options.prototype.setSquareSize = function(value)
-	{
-		if(value==null) {
-			this._squareSize = null;
-		}
-		else {
-			// Acceptable values are integers multiple of 4 and between 24 and 64.
-			value = Math.min(Math.max(value, MINIMUM_SQUARE_SIZE), MAXIMUM_SQUARE_SIZE);
-			value = STEP_SQUARE_SIZE * Math.round(value / STEP_SQUARE_SIZE);
-			this._squareSize = isNaN(value) ? null : value;
-		}
-	};
-
-	/**
-	 * Set the show-coordinates option value.
-	 *
-	 * @param {(boolean|string)} [value=null]
-	 * New value (null means that the value corresponding getter will read
-	 * determine the value from the ChessWidget.Options parent object.
-	 */
-	Options.prototype.setShowCoordinates = function(value)
-	{
-		if(value==null) {
-			this._showCoordinates = null;
-		}
-		else {
-			if(typeof(value)=="string") {
-				value = value.toLowerCase();
-				if     (value=="true" ) this._showCoordinates = true ;
-				else if(value=="false") this._showCoordinates = false;
-				else                    this._showCoordinates = null ;
-			}
-			else {
-				this._showCoordinates = value ? true : false;
-			}
-		}
-	};
-
 
 
 	/**
 	 * Root URL of the library.
 	 *
-	 * Use the method ChessWidget.rootURL to get the root URL of the library,
+	 * Use the method `rootURL` to get the root URL of the library,
 	 * instead of reading this variable directly.
 	 *
 	 * @type {string}
 	 * @private
-	 * @memberof ChessWidget
 	 */
 	var _rootURL = null;
+
 
 	/**
 	 * Return the root URL of the library.
 	 *
-	 * @private
-	 *
 	 * @returns {string}
-	 *
-	 * @memberof ChessWidget
 	 */
 	function rootURL()
 	{
@@ -296,177 +81,259 @@ ChessWidget = (function(Chess, $)
 		return _rootURL;
 	}
 
-	/**
-	 * Return the URL to the folder containing the sprites (images representing the chess pieces),
-	 * with the trailing "/" character.
-	 *
-	 * @private
-	 *
-	 * @param {number} squareSize
-	 * @returns {String}
-	 *
-	 * @memberof ChessWidget
-	 */
-	function spriteBaseURL(squareSize)
-	{
-		var retVal = rootURL() + 'sprite/' + squareSize + '/';
-		return retVal;
-	}
 
 	/**
-	 * Return the URL to the sprite (a PNG image) corresponding to a given colored piece.
+	 * Ensure that the given string is trimmed.
 	 *
-	 * @private
-	 *
-	 * @param {string} coloredPiece
-	 * @param {number} squareSize
-	 * @returns {String}
-	 *
-	 * @memberof ChessWidget
-	 */
-	function coloredPieceURL(coloredPiece, squareSize)
-	{
-		var retVal =
-			spriteBaseURL(squareSize) +
-			(coloredPiece==null ? 'clear' : (coloredPiece.color + coloredPiece.type)) +
-			'.png';
-		return retVal;
-	}
-
-	/**
-	 * Return the URL to the sprite (a PNG image) corresponding to a given color flag.
-	 *
-	 * @private
-	 *
-	 * @param {string} color
-	 * @param {number} squareSize
+	 * @param {string} position
 	 * @returns {string}
-	 *
-	 * @memberof ChessWidget
 	 */
-	function colorURL(color, squareSize)
+	function filterOptionPosition(position)
 	{
-		var retVal = spriteBaseURL(squareSize);
-		switch(color) {
-			case 'w': retVal+='white.png'; break;
-			case 'b': retVal+='black.png'; break;
-			default: retVal+='clear.png'; break;
-		}
-		return retVal;
+		return position.replace(/^\s+|\s+$/g, '');
 	}
+
 
 	/**
-	 * Create a new DOM node representing a chess diagram.
+	 * Ensure that the given number is a valid square size.
 	 *
-	 * @param {(Chess|string)} position Chess position to represent.
-	 *
-	 * If the argument is a string, the function will try to parse it as a
-	 * FEN-formatted string. If the parsing fails, an empty chess position will
-	 * be represented.
-	 *
-	 * @params {ChessWidget.Options} [options=null] Diagram options, or null to use the default ones.
-	 * @returns {jQuery}
-	 *
-	 * @memberof ChessWidget
+	 * @param {number} squareSize
+	 * @returns {number}
 	 */
-	function make(position, options)
+	function filterOptionSquareSize(squareSize)
 	{
-		// Default options
-		if(options==null) {
-			options = new Options();
-		}
-
-		// If the `position` argument is a string, try to parse it as a FEN-formatted string.
-		if(typeof(position)=='string') {
-			position = position.replace(/^\s+|\s+$/g, '');
-			position = new Chess(position);
-		}
-
-		// Read the options
-		var flip             = options.getFlip           ();
-		var squareSize       = options.getSquareSize     ();
-		var showCoordinates  = options.getShowCoordinates();
-		var whiteSquareColor = "#f0dec7"; //TODO: read this from options
-		var blackSquareColor = "#b5876b"; //TODO: read this from options
-		var squareColor = {light: whiteSquareColor, dark: blackSquareColor};
-
-		// Create the returned node
-		var retVal = $('<div class="ChessWidget"></div>');
-		var table  = $('<div class="ChessWidget-table"></div>');
-		retVal.append(table);
-
-		// Rows, columns
-		var ROWS    = flip ? ['1','2','3','4','5','6','7','8'] : ['8','7','6','5','4','3','2','1'];
-		var COLUMNS = flip ? ['h','g','f','e','d','c','b','a'] : ['a','b','c','d','e','f','g','h'];
-
-		// For each row...
-		for(var r=0; r<8; ++r) {
-			var tr = $('<div class="ChessWidget-row"></div>');
-			table.append(tr);
-
-			// If visible, the row coordinates are shown in the left-most column.
-			if(showCoordinates) {
-				var th = $('<div class="ChessWidget-row-header">' + ROWS[r] + '</div>');
-				tr.append(th);
-			}
-
-			// Print the squares belonging to the current column
-			for(var c=0; c<8; ++c) {
-				var sq = COLUMNS[c] + ROWS[r];
-				var td = $(
-					'<div class="ChessWidget-cell" style="background-color: ' + squareColor[position.square_color(sq)] + ';">' +
-						'<img src="' + coloredPieceURL(position.get(sq), squareSize) + '" />' +
-					'</div>'
-				);
-				tr.append(td);
-			}
-
-			// Add a "fake" cell at the end of the row: this last column will contain
-			// the turn flag.
-			var fakeCell = $('<div class="ChessWidget-fake-cell"></div>');
-			tr.append(fakeCell);
-
-			// Add the turn flag to the current fake cell if required.
-			var turn = position.turn();
-			if((ROWS[r]=='8' && turn=='b') || (ROWS[r]=='1' && turn=='w')) {
-				var img = $('<img src="' + colorURL(turn, squareSize) + '" />');
-				fakeCell.append(img);
-			}
-		}
-
-		// If visible, the column coordinates are shown at the bottom of the table.
-		if(showCoordinates) {
-			var tr = $('<div class="ChessWidget-row"></div>');
-			table.append(tr);
-
-			// Empty cell
-			var th0 = $('<div class="ChessWidget-corner-header"></div>');
-			tr.append(th0);
-
-			// Column headers
-			for(var c=0; c<8; ++c) {
-				var th = $('<div class="ChessWidget-column-header">' + COLUMNS[c] + '</div>');
-				tr.append(th);
-			}
-
-			// Empty cell below the "fake" cell columns
-			var thFake = $('<div class="ChessWidget-fake-header"></div>');
-			tr.append(thFake);
-		}
-
-		// Return the result
-		return retVal;
+		return Math.min(Math.max(squareSize, MINIMUM_SQUARE_SIZE), MAXIMUM_SQUARE_SIZE);
 	}
 
 
+	/**
+	 * Register a 'chessboard' widget in the jQuery widget framework.
+	 */
+	$.widget('uichess.chessboard',
+	{
+		/**
+		 * Default options.
+		 */
+		options:
+		{
+			/**
+			 * String describing the chess position (FEN format).
+			 */
+			position: '8/8/8/8/8/8/8/8 w - - 0 1',
 
-	// Returned the module object
-	return {
+			/**
+			 * Whether the chessboard is flipped or not.
+			 */
+			flip: false,
+
+			/**
+			 * Size of the squares (in pixel).
+			 */
+			squareSize: 32,
+
+			/**
+			 * Whether the row and column coordinates are shown or not.
+			 */
+			showCoordinates: true
+		},
+
+
+		/**
+		 * The chess position.
+		 * @type {Chess}
+		 */
+		_position: null,
+
+
+		/**
+		 * Constructor.
+		 */
+		_create: function()
+		{
+			this.element.addClass('uichess-chessboard').disableSelection();
+			this.options.position   = filterOptionPosition  (this.options.position  );
+			this.options.squareSize = filterOptionSquareSize(this.options.squareSize);
+			this._refresh();
+		},
+
+
+		/**
+		 * Destructor.
+		 */
+		_destroy: function()
+		{
+			this.element.removeClass('uichess-chessboard').enableSelection();
+		},
+
+
+		/**
+		 * Option setter.
+		 */
+		_setOption: function(key, value)
+		{
+			if(key=='position') {
+				value = filterOptionPosition(value);
+				this._position = null; // The FEN needs to be re-parsed.
+			}
+
+			else if(key=='squareSize') {
+				value = filterOptionSquareSize(value);
+			}
+
+			this.options[key] = value;
+			this._refresh();
+		},
+
+
+		/**
+		 * When the widget is placed in a resizable container (such as a jQuery resizable frame or dialog),
+		 * it is often suitable to let the container control the widget size. This can be done
+		 * as follows:
+		 *
+		 *   $('#my-chessboard-widget).chessboard('sizeControlledByContainer', $('#container'));
+		 *
+		 * The options that controls the aspect of the chessboard ('squareSize', 'showCoordinates', etc...)
+		 * should not be modified in this mode.
+		 *
+		 * TODO: Does not work if for instance only the height of the container is constrained by the chessboard,
+		 * but not its width.
+		 *
+		 * @param {jQuery} container
+		 * @param {string} eventName Name of the event triggered when the container is resized.
+		 */
+		sizeControlledByContainer: function(container, eventName)
+		{
+			var obj = this;
+			container.on(eventName, function(event, ui)
+			{
+				// Save the initial information about the geometry of the widget and its container.
+				if(obj._initialGeometryInfo==null) {
+					obj._initialGeometryInfo = {
+						squareSize: obj.options.squareSize,
+						height    : ui.originalSize.height,
+						width     : ui.originalSize.width
+					};
+				}
+
+				// Compute the new square size parameter.
+				var deltaW = ui.size.width  - obj._initialGeometryInfo.width ;
+				var deltaH = ui.size.height - obj._initialGeometryInfo.height;
+				var deltaWPerSq = Math.floor(deltaW / 9);
+				var deltaHPerSq = Math.floor(deltaH / 8);
+				var newSquareSize = obj._initialGeometryInfo.squareSize + Math.min(deltaWPerSq, deltaHPerSq);
+				newSquareSize = Math.min(Math.max(newSquareSize, MINIMUM_SQUARE_SIZE), MAXIMUM_SQUARE_SIZE);
+
+				// Update the widget if necessary.
+				if(newSquareSize!=obj.options.squareSize) {
+					obj.options.squareSize = newSquareSize;
+					obj._refresh();
+				}
+			});
+		},
+
+
+		/**
+		 * Refresh the widget.
+		 */
+		_refresh: function()
+		{
+			// Parse the FEN-formatted position string, if necessary.
+			if(this._position==null) {
+				var fen = this.options.position;
+				switch(fen) {
+					case 'start': fen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'; break;
+					case 'empty': fen='8/8/8/8/8/8/9/8 w - - 0 1'; break;
+				}
+				this._position = new Chess(fen);
+			}
+
+			// Square colors
+			var SQUARE_COLOR = { light: '#f0dec7', dark: '#b5876b' };
+
+			// Rows, columns
+			var ROWS    = this.options.flip ? ['1','2','3','4','5','6','7','8'] : ['8','7','6','5','4','3','2','1'];
+			var COLUMNS = this.options.flip ? ['h','g','f','e','d','c','b','a'] : ['a','b','c','d','e','f','g','h'];
+
+			// Offset for image alignment
+			var SQUARE_SIZE  = this.options.squareSize;
+			var SPRITE_URL   = rootURL() + 'sprite/all-' + SQUARE_SIZE + '.png';
+			var OFFSET_PIECE = { b:0, k:SQUARE_SIZE, n:2*SQUARE_SIZE, p:3*SQUARE_SIZE, q:4*SQUARE_SIZE, r:5*SQUARE_SIZE, x:6*SQUARE_SIZE };
+			var OFFSET_COLOR = { b:0, w:SQUARE_SIZE };
+
+			// Open the "table" node.
+			var content = '<div class="uichess-chessboard-table">';
+
+			// For each row...
+			for(var r=0; r<8; ++r) {
+				content += '<div class="uichess-chessboard-row">';
+
+				// If visible, the row coordinates are shown in the left-most column.
+				if(this.options.showCoordinates) {
+					content += '<div class="uichess-chessboard-rowHeader">' + ROWS[r] + '</div>';
+				}
+
+				// Print the squares belonging to the current column.
+				for(var c=0; c<8; ++c) {
+					var sq = COLUMNS[c] + ROWS[r];
+					var cp = this._position.get(sq);
+					content += '<div class="uichess-chessboard-cell" style="' +
+						'width: ' + SQUARE_SIZE + 'px; height: ' + SQUARE_SIZE + 'px; ' +
+						'background-color: ' + SQUARE_COLOR[this._position.square_color(sq)] + ';';
+					if(cp!=null) {
+						content += ' background-image: url(' + SPRITE_URL + ');';
+						content += ' background-position: -' + OFFSET_PIECE[cp.type] + 'px -' + OFFSET_COLOR[cp.color] + 'px;';
+					}
+					content += '"></div>';
+				}
+
+				// Add a "fake" cell at the end of the row: this last column will contain the turn flag, if necessary.
+				content += '<div class="uichess-chessboard-turnCell">';
+				var turn = this._position.turn();
+				if((ROWS[r]=='8' && turn=='b') || (ROWS[r]=='1' && turn=='w')) {
+					content += '<div class="uichess-chessboard-turnFlag" style="' +
+						'width: ' + SQUARE_SIZE + 'px; height: ' + SQUARE_SIZE + 'px; ' +
+						'background-image: url(' + SPRITE_URL + '); ' +
+						'background-position: -' + OFFSET_PIECE['x'] + 'px -' + OFFSET_COLOR[turn] + 'px;' +
+					'"></div>';
+				}
+
+				// End of the "fake" cell and end of the row.
+				content += '</div></div>';
+			}
+
+			// If visible, the column coordinates are shown at the bottom of the table.
+			if(this.options.showCoordinates) {
+				content += '<div class="uichess-chessboard-lastRow">';
+
+				// Empty cell
+				content += '<div class="uichess-chessboard-cornerHeader"></div>';
+
+				// Column headers
+				for(var c=0; c<8; ++c) {
+					content += '<div class="uichess-chessboard-columnHeader">' + COLUMNS[c] + '</div>';
+				}
+
+				// Empty cell below the "fake" cell columns + end of the row.
+				content += '<div class="uichess-chessboard-turnHeader"></div></div>';
+			}
+
+			// Close the "table" node.
+			content += '</div>'
+
+			// Clear the target node and render its content.
+			this.element.empty();
+			$(content).appendTo(this.element);
+		}
+	}); /* End of $.widget('uichess.chessboard', ... ) */
+
+
+	/**
+	 * Public constants.
+	 */
+	$.chessboard =
+	{
 		MINIMUM_SQUARE_SIZE: MINIMUM_SQUARE_SIZE,
-		MAXIMUM_SQUARE_SIZE: MAXIMUM_SQUARE_SIZE,
-		STEP_SQUARE_SIZE   : STEP_SQUARE_SIZE   ,
-		Options: Options,
-		make   : make
+		MAXIMUM_SQUARE_SIZE: MAXIMUM_SQUARE_SIZE
 	};
 
 })(Chess, jQuery);
