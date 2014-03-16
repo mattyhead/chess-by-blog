@@ -20,11 +20,6 @@
 
 
 /******************************************************************************/
-/*** Miscellaneous ***/
-
-
-
-/******************************************************************************/
 /*** Column layout ***/
 
 .rpbchessboard-admin-columns {
@@ -257,5 +252,66 @@
 }
 
 #rpbchessboard-admin-translator-list img {
+	vertical-align: middle;
+}
+
+
+
+/******************************************************************************/
+/*** Edit FEN dialog ***/
+
+#rpbchessboard-editFen-castleRights {
+	text-align: center;
+	table-layout: fixed;
+	margin-top: 5px;
+}
+
+#rpbchessboard-editFen-castleRights td {
+	vertical-align: middle;
+	padding: 0px 5px 0px;
+}
+
+#rpbchessboard-editFen-dialog .submitbox {
+	padding: 5px 10px;
+	font-size: 11px;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#rpbchessboard-editFen-fenArea {
+	margin: 0px 10px;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#rpbchessboard-editFen-fenArea > span {
+	margin-right: 5px;
+}
+
+#rpbchessboard-editFen-fenArea > input {
+	width: 100%;
+}
+
+#rpbchessboard-editFen-update {
+	order: 1;
+}
+
+#rpbchessboard-editFen-cancel {
+	order: 0;
+}
+
+.rpbchessboard-editFen-turnFlag {
+	display: inline-block;
 	vertical-align: middle;
 }

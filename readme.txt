@@ -50,6 +50,7 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
  * Support HTML formatting in PGN commentaries.
  * Compatibility mode to avoid conflicts with the other plugins that use
    the `[fen][/fen]` and `[pgn][/pgn]` shortcodes too.
+ * Interactive creation and modification of the chess diagrams in the text editor.
 
 If you encounter some bugs with this plugin, or if you wish to get new features
 in the future versions, you can report/propose them in the bug tracker at
@@ -80,10 +81,14 @@ please have a look to the general [plugin management page](http://codex.wordpres
 4. Chess game in a post with the Twenty Ten theme.
 5. When clicking on a move, a popup frame is displayed, showing the corresponding position.
 6. Chess game with commentaries and sub-variations.
+7. Interactive creation and modification of the chess diagrams in the text editor.
 
 
 
 == Changelog ==
+
+= 2.3 =
+* Dialog to create/edit FEN chess diagrams in the text editor.
 
 = 2.2.2 =
 * Improve compatibility with IE <= 10.
@@ -96,14 +101,14 @@ please have a look to the general [plugin management page](http://codex.wordpres
 * Tested up to Wordpress 3.8.1.
 
 = 2.1 =
-* Compatibility mode to avoid conflicts with other plugins that might use the [fen][/fen] and [pgn][/pgn] shortcodes.
+* Compatibility mode to avoid conflicts with other plugins that might use the `[fen][/fen]` and `[pgn][/pgn]` shortcodes.
 
 = 2.0.1 =
 * Tested up to Wordpress 3.8.
 
 = 2.0 =
 * Add: flip attribute (to change the orientation of the chessboards).
-* Auto-size the chessboard in the navigation frame generated with [pgn][/pgn].
+* Auto-size the chessboard in the navigation frame generated with `[pgn][/pgn]`.
 
 = 1.99.6 =
 * Documentation for the PGN tag.

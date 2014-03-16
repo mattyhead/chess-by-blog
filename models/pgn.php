@@ -20,7 +20,7 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/abstracttoplevelshortcodemodel.php');
+require_once(RPBCHESSBOARD_ABSPATH.'models/abstract/abstracttoplevelshortcodemodel.php');
 
 
 /**
@@ -31,17 +31,8 @@ class RPBChessboardModelPgn extends RPBChessboardAbstractTopLevelShortcodeModel
 	public function __construct($atts, $content)
 	{
 		parent::__construct($atts, $content);
+		$this->loadTrait('ChessWidgetDefault');
 		$this->loadTrait('ChessWidgetCustom', $this->getAttributes());
-	}
-
-	public function isInitializationTemplateRequired()
-	{
-		return true;
-	}
-
-	public function isLocalizationTemplateRequired()
-	{
-		return true;
 	}
 
 

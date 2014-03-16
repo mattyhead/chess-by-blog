@@ -25,42 +25,9 @@ while (!chess.game_over()) {
 ```
 
 Need a user interface?  Try Chris Oakman's excellent
-[ChessBoardJS](http://chessboardjs.com) library.  The code below can be
-seen in action at
-[ChessBoardJS - Random vs Random](http://chessboardjs.com/examples#5002).
-
-```html
-...
-<link rel="stylesheet" href="css/chessboard-0.2.0.css" />
-<script src="js/chess.js"></script>
-<script src="js/chessboard-0.2.0.js"></script>
-<script>
-    var game = new Chess();
-    var board = new ChessBoard('board', 'start');
-
-    var random_move = function() {
-        if (game.game_over()) return;
-        var moves = game.moves();
-        var move = moves[Math.floor(Math.random() * moves.length)];
-        game.move(move);
-        board.position(game.fen());
-        window.setTimeout(random_move, 500);
-    };
-
-    window.setTimeout(random_move, 500);
-</script>
-...
-<div id="board" style="width: 400px"></div>
-...
-```
-
-chess.js is used in the projects below:
-
-- [3D Hartwig Chess Set](http://codepen.io/juliangarnier/fulldetails/BsIih)
-- [Chess in Javascript](http://thingsilearned.com/2012/11/22/javascript-chess-game/)
-- [Multiplayer Chess](http://multiplayerchess.com/)
-- [EasyChess.com](http://www.easychess.com/)
-- [Reti Chess](http://retichess.nodejitsu.com/)
+[chessboard.js](http://chessboardjs.com) library.  See 
+[chessboard.js - Random vs Random](http://chessboardjs.com/examples#5002) for
+an example integration of chess.js with chessboard.js.
 
 ## API
 
@@ -274,9 +241,9 @@ chess.load('4r3/8/X12XPk/1p6/pP2p1R1/P1B5/2P2K2/3r4 w - - 1 45');
 ### .load_pgn(pgn, [ options ])
 Load the moves of a game stored in
 [Portable Game Notation](http://en.wikipedia.org/wiki/Portable_Game_Notation).
-Options is a optional parameter that contains a 'newline_char' denoting the line
-delimiter (the default delimiter is '\r?\n', optional carriage return with newline).  Returns true if the PGN was parsed
-successfully, otherwise false.
+Options is a optional parameter that contains a 'newline_char' which is a
+string representation of a RegExp (and should not be pre-escaped) and defaults
+to '\r?\n'). Returns true if the PGN was parsed successfully, otherwise false.
 
 ```js
 var chess = new Chess();
@@ -501,14 +468,17 @@ Special thanks to the following developers for their patches and contributions
 (alphabetically):
 
 - [Steve Bragg](https://github.com/2sb18)
+- [Matt Flaschen](https://github.com/mattflaschen)
 - [E. Azer Koçulu](https://github.com/azer)
 - [Falco Nogatz](https://github.com/fnogatz)
 - [jdponomarev](https://github.com/jdponomarev)
+- [Tom Offermann](https://github.com/toffer)
 - [David Moises Paz Reyes](https://github.com/davidmpaz)
 - [Raminder Singh](https://github.com/imor)
 - [Stiff](https://github.com/stiff)
 - [Seb Vincent](https://github.com/sebv)
 - [Linmiao Xu](https://github.com/linrock)
+- [Jonathan Zacsh](https://github.com/jzacsh)
 
 Musical support provided by:
 
