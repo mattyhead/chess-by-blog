@@ -20,20 +20,23 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/traits/abstractactiontrait.php');
+require_once(RPBCHESSBOARD_ABSPATH.'models/traits/abstracttrait.php');
 require_once(RPBCHESSBOARD_ABSPATH.'helpers/validation.php');
 
 
 /**
  * Process the request resulting from a click in the "Options" form in the backend.
  */
-class RPBChessboardTraitActionDefineOptions extends RPBChessboardAbstractActionTrait
+class RPBChessboardTraitPostOptions extends RPBChessboardAbstractTrait
 {
-	public function processRequest()
+	/**
+	 * Update the plugin general options.
+	 */
+	public function updateOptions()
 	{
 		// Set the square size parameter
 		$value = $this->getPostSquareSize();
-		if(!is_null($value)) {
+		if(isset($value)) {
 			update_option('rpbchessboard_squareSize', $value);
 		}
 
@@ -51,12 +54,7 @@ class RPBChessboardTraitActionDefineOptions extends RPBChessboardAbstractActionT
 	 */
 	public function getPostSquareSize()
 	{
-		if(array_key_exists('squareSize', $_POST)) {
-			return RPBChessboardHelperValidation::validateSquareSize($_POST['squareSize']);
-		}
-		else {
-			return null;
-		}
+		return isset($_POST['squareSize']) ? RPBChessboardHelperValidation::validateSquareSize($_POST['squareSize']) : null;
 	}
 
 
@@ -101,12 +99,7 @@ class RPBChessboardTraitActionDefineOptions extends RPBChessboardAbstractActionT
 	 */
 	private function getPostBooleanParameter($paramName)
 	{
-		if(array_key_exists($paramName, $_POST)) {
-			return RPBChessboardHelperValidation::validateBooleanFromInt($_POST[$paramName]);
-		}
-		else {
-			return null;
-		}
+		return isset($_POST[$paramName]) ? RPBChessboardHelperValidation::validateBooleanFromInt($_POST[$paramName]) : null;
 	}
 
 
@@ -118,9 +111,8 @@ class RPBChessboardTraitActionDefineOptions extends RPBChessboardAbstractActionT
 	 */
 	private function updateBooleanParameter($key, $value)
 	{
-		if(is_null($value)) {
-			return;
+		if(isset($value)) {
+			update_option('rpbchessboard_' . $key, $value ? 1 : 0);
 		}
-		update_option('rpbchessboard_' . $key, $value ? 1 : 0);
 	}
 }
