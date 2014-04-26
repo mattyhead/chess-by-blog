@@ -20,56 +20,20 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH . 'helpers/loader.php');
+require_once(RPBCHESSBOARD_ABSPATH . 'views/abstractview.php');
 
 
 /**
- * Base class for the controllers.
+ * Generic view for the plugin administration pages.
  */
-abstract class RPBChessboardAbstractController
+class RPBChessboardViewAdminPage extends RPBChessboardAbstractView
 {
-	private $modelName;
-	private $model;
-	private $view;
-
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $modelName Name of the model to use.
-	 */
-	protected function __construct($modelName)
+	public function display()
 	{
-		$this->modelName = $modelName;
+		$model = $this->getModel();
+		echo '<div class="wrap rpbchessboard-admin">';
+		include(RPBCHESSBOARD_ABSPATH . 'templates/adminpage/header.php');
+		include(RPBCHESSBOARD_ABSPATH . 'templates/adminpage/' . strtolower($model->getTemplateName()) . '.php');
+		echo '</div>';
 	}
-
-
-	/**
-	 * Load (if necessary) and return the model.
-	 */
-	public function getModel()
-	{
-		if(!isset($this->model)) {
-			$this->model = RPBChessboardHelperLoader::loadModel($this->modelName);
-		}
-		return $this->model;
-	}
-
-
-	/**
-	 * Load (if necessary) and return the view.
-	 */
-	public function getView()
-	{
-		if(!isset($this->view)) {
-			$this->view = RPBChessboardHelperLoader::loadView($this->getModel());
-		}
-		return $this->view;
-	}
-
-
-	/**
-	 * Entry-point of the controller.
-	 */
-	public abstract function run();
 }

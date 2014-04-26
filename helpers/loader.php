@@ -20,22 +20,44 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/abstract/abstractadminmodel.php');
-
-
 /**
- * Model associated to the 'Memo' page in the backend.
+ * Helper functions for dynamic class loading.
  */
-class RPBChessboardModelMemo extends RPBChessboardAbstractAdminModel
+abstract class RPBChessboardHelperLoader
 {
-	public function __construct()
+	/**
+	 * Load the model corresponding to the given model name.
+	 */
+	public static function loadModel($modelName, $arg1=null, $arg2=null, $arg3=null)
 	{
-		parent::__construct();
-		$this->loadTrait('Compatibility');
+		$fileName  = strtolower($modelName);
+		$className = 'RPBChessboardModel' . $modelName;
+		require_once(RPBCHESSBOARD_ABSPATH . 'models/' . $fileName . '.php');
+		return new $className($arg1, $arg2, $arg3);
 	}
 
-	public function getTitle()
+
+	/**
+	 * Load the model corresponding to the given trait name.
+	 */
+	public static function loadTrait($traitName, $arg1=null, $arg2=null, $arg3=null)
 	{
-		return __('Memo', 'rpbchessboard');
+		$fileName  = strtolower($traitName);
+		$className = 'RPBChessboardTrait' . $traitName;
+		require_once(RPBCHESSBOARD_ABSPATH . 'models/traits/' . $fileName . '.php');
+		return new $className($arg1, $arg2, $arg3);
+	}
+
+
+	/**
+	 * Load the view whose name is returned by `$model->getViewName()`.
+	 */
+	public static function loadView($model)
+	{
+		$viewName  = $model->getViewName();
+		$fileName  = strtolower($viewName);
+		$className = 'RPBChessboardView' . $viewName;
+		require_once(RPBCHESSBOARD_ABSPATH . 'views/' . $fileName . '.php');
+		return new $className($model);
 	}
 }

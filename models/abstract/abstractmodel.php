@@ -20,6 +20,9 @@
  ******************************************************************************/
 
 
+require_once(RPBCHESSBOARD_ABSPATH . 'helpers/loader.php');
+
+
 /**
  * Base class for the models used by the RPBChessboard plugin.
  *
@@ -35,6 +38,7 @@
 abstract class RPBChessboardAbstractModel
 {
 	private $name;
+	private $templateName;
 	private $methodIndex = array();
 
 
@@ -66,10 +70,7 @@ abstract class RPBChessboardAbstractModel
 	public function loadTrait($traitName, $arg1=null, $arg2=null, $arg3=null)
 	{
 		// Load the definition of the trait, and instantiate it.
-		$fileName  = strtolower($traitName);
-		$className = 'RPBChessboardTrait' . $traitName;
-		require_once(RPBCHESSBOARD_ABSPATH.'models/traits/'.$fileName.'.php');
-		$trait = new $className($arg1, $arg2, $arg3);
+		$trait = RPBChessboardHelperLoader::loadTrait($traitName, $arg1, $arg2, $arg3);
 
 		// List all the public methods of the trait, and register them
 		// to the method index of the current model.
@@ -111,6 +112,18 @@ abstract class RPBChessboardAbstractModel
 	 */
 	public function getTemplateName()
 	{
-		return $this->getName();
+		return isset($this->templateName) ? $this->templateName : $this->getName();
+	}
+
+
+	/**
+	 * Change the name of the template to use.
+	 *
+	 * @param string $templateName Null to use the default template, which is the one
+	 *        that has the same name as the model.
+	 */
+	public function setTemplateName($templateName)
+	{
+		$this->templateName = $templateName;
 	}
 }

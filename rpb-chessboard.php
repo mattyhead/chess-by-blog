@@ -26,7 +26,7 @@ Description: This plugin allows you to typeset and display chess diagrams and PG
 Text Domain: rpbchessboard
 Author: Yoann Le Montagner
 License: GPLv3
-Version: 2.3.2
+Version: 2.4
 */
 
 
@@ -85,6 +85,17 @@ function rpbchessboard_enqueue_css()
 		wp_register_style('rpbchessboard-admin'    , RPBCHESSBOARD_URL.'/css/admin.css');
 		wp_enqueue_style ('rpbchessboard-jquery-ui');
 		wp_enqueue_style ('rpbchessboard-admin'    );
+	}
+}
+
+
+// Plugin administration pages
+if(is_admin()) {
+	add_action('admin_menu', 'rpbchessboard_init_admin_pages');
+	function rpbchessboard_init_admin_pages()
+	{
+		require_once(RPBCHESSBOARD_ABSPATH . 'wp/adminpages.php');
+		RPBChessboardAdminPages::register();
 	}
 }
 

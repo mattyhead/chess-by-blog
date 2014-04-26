@@ -22,7 +22,6 @@
 
 <div id="rpbchessboard-admin-about">
 
-	<h3>RPB Chessboard</h3>
 	<p>
 		<?php _e(
 			'The RPB Chessboard plugin allows you to typeset and display chess games and diagrams '.
@@ -58,6 +57,10 @@
 
 	<h3><?php _e('Translation', 'rpbchessboard'); ?></h3>
 	<dl id="rpbchessboard-admin-translator-list">
+		<div>
+			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/de.png'; ?>" />Deutsch</dt>
+			<dd>Markus Liebelt</dd>
+		</div>
 		<div>
 			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/gb.png'; ?>" />English</dt>
 			<dd>Yoann Le Montagner</dd>

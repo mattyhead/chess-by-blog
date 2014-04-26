@@ -20,22 +20,17 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/abstract/abstractadminmodel.php');
+require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
 
 
 /**
  * Model associated to the 'Help' page in the backend.
  */
-class RPBChessboardModelHelp extends RPBChessboardAbstractAdminModel
+class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPage
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->loadTrait('Compatibility');
-	}
-
-	public function getTitle()
-	{
-		return __('Help', 'rpbchessboard');
 	}
 }

@@ -20,20 +20,17 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'views/abstractview.php');
+require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
 
 
 /**
- * Generic view for the administration pages.
+ * Model associated to the 'Memo' page in the backend.
  */
-class RPBChessboardViewAdmin extends RPBChessboardAbstractView
+class RPBChessboardModelAdminPageMemo extends RPBChessboardAbstractModelAdminPage
 {
-	public function display()
+	public function __construct()
 	{
-		$model = $this->getModel();
-		echo '<div class="wrap rpbchessboard-admin">';
-		include(RPBCHESSBOARD_ABSPATH.'templates/admin/header.php');
-		include(RPBCHESSBOARD_ABSPATH.'templates/admin/'.strtolower($model->getTemplateName()).'.php');
-		echo '</div>';
+		parent::__construct();
+		$this->loadTrait('Compatibility');
 	}
 }

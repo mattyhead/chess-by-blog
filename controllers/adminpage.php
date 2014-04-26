@@ -20,43 +20,56 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/abstract/abstractadminmodel.php');
+require_once(RPBCHESSBOARD_ABSPATH . 'controllers/abstractcontroller.php');
 
 
 /**
- * Model associated to the 'About' page in the backend.
+ * Show the requested plugin administration page.
  */
-class RPBChessboardModelAbout extends RPBChessboardAbstractAdminModel
+class RPBChessboardControllerAdminPage extends RPBChessboardAbstractController
 {
-	private $pluginInfo;
-
-
-	public function getTitle()
-	{
-		return __('About', 'rpbchessboard');
-	}
-
-
 	/**
-	 * Current version of the plugin
+	 * Constructor
 	 *
-	 * @return string
+	 * @param string $modelName Name of the model to use. It is supposed to refer
+	 *        to a model that inherits from the class RPBChessboardAbstractModelAdminPage.
 	 */
-	public function getPluginVersion()
+	public function __construct($modelName)
 	{
-		$this->loadPluginInfo();
-		return $this->pluginInfo['Version'];
+		parent::__construct($modelName);
 	}
 
 
 	/**
-	 * Load the information concerning the plugin.
+	 * Entry-point of the controller.
 	 */
-	private function loadPluginInfo()
+	public function run()
 	{
-		if($this->pluginInfo!=null) {
+		// Process the post-action, if any.
+		switch($this->getModel()->getPostAction()) {
+			case 'update-options': $this->executeAction('PostOptions', 'updateOptions'); break;
+			default: break;
+		}
+
+		// Create and display the view.
+		$this->getView()->display();
+	}
+
+
+	/**
+	 * Load the trait `$traitName`, and execute the method `$methodName` supposedly defined by the trait.
+	 *
+	 * @param string $traitName
+	 * @param string $methodName
+	 * @param string $capability Required capability to execute the action. Default is `'manage_options'`.
+	 */
+	private function executeAction($traitName, $methodName, $capability='manage_options')
+	{
+		if(!current_user_can($capability)) {
 			return;
 		}
-		$this->pluginInfo = get_plugin_data(RPBCHESSBOARD_ABSPATH.'rpb-chessboard.php');
+		$model = $this->getModel();
+		$model->loadTrait($traitName);
+		$model->setPostMessage($model->$methodName());
 	}
 }

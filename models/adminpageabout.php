@@ -20,58 +20,37 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'controllers/abstractcontroller.php');
+require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
 
 
 /**
- * Controller for the backend.
+ * Model associated to the 'About' page in the backend.
  */
-class RPBChessboardControllerAdmin extends RPBChessboardAbstractController
+class RPBChessboardModelAdminPageAbout extends RPBChessboardAbstractModelAdminPage
 {
+	private $pluginInfo;
+
+
 	/**
-	 * Constructor
+	 * Current version of the plugin
 	 *
-	 * @param string $modelName Name of the model to use. It is supposed to refer
-	 *        to a model that inherits from the class RPBChessboardAbstractAdminModel.
+	 * @return string
 	 */
-	public function __construct($modelName)
+	public function getPluginVersion()
 	{
-		parent::__construct($modelName);
+		$this->loadPluginInfo();
+		return $this->pluginInfo['Version'];
 	}
 
 
 	/**
-	 * Entry-point of the controller.
+	 * Load the information concerning the plugin.
 	 */
-	public function run()
+	private function loadPluginInfo()
 	{
-		// Load the model
-		$model = $this->getModel();
-
-		// Process the post-action, if any.
-		switch($model->getPostAction()) {
-			case 'update-options': $this->executeAction('PostOptions', 'updateOptions'); break;
-			default: break;
+		if($this->pluginInfo!=null) {
+			return;
 		}
-
-		// Create the view
-		$view = self::loadView($model);
-
-		// Display the view
-		$view->display();
-	}
-
-
-	/**
-	 * Load the trait `$traitName`, and execute the method `$methodName` supposedly defined by the trait.
-	 *
-	 * @param string $traitName
-	 * @param string $methodName
-	 */
-	private function executeAction($traitName, $methodName)
-	{
-		$model = $this->getModel();
-		$model->loadTrait($traitName);
-		$model->$methodName();
+		$this->pluginInfo = get_plugin_data(RPBCHESSBOARD_ABSPATH . 'rpb-chessboard.php');
 	}
 }

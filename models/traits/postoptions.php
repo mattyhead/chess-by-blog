@@ -29,77 +29,60 @@ require_once(RPBCHESSBOARD_ABSPATH.'helpers/validation.php');
  */
 class RPBChessboardTraitPostOptions extends RPBChessboardAbstractTrait
 {
+	private $squareSize;
+	private $showCoordinates;
+	private $fenCompatibilityMode;
+	private $pgnCompatibilityMode;
+
+
 	/**
-	 * Update the plugin general options.
+	 * Constructor.
 	 */
-	public function updateOptions()
+	public function __construct()
 	{
-		// Set the square size parameter
-		$value = $this->getPostSquareSize();
-		if(isset($value)) {
-			update_option('rpbchessboard_squareSize', $value);
+		// Load the square-size parameter.
+		if(isset($_POST['squareSize'])) {
+			$this->squareSize = RPBChessboardHelperValidation::validateSquareSize($_POST['squareSize']);
 		}
 
-		// Set the boolean parameters
-		$this->updateBooleanParameter('showCoordinates'     , $this->getPostShowCoordinates     ());
-		$this->updateBooleanParameter('fenCompatibilityMode', $this->getPostFENCompatibilityMode());
-		$this->updateBooleanParameter('pgnCompatibilityMode', $this->getPostPGNCompatibilityMode());
+		// Load the boolean parameters.
+		$this->showCoordinates      = $this->loadBooleanParameter('showCoordinates'     );
+		$this->fenCompatibilityMode = $this->loadBooleanParameter('fenCompatibilityMode');
+		$this->pgnCompatibilityMode = $this->loadBooleanParameter('pgnCompatibilityMode');
 	}
 
 
 	/**
-	 * New default square size for the chessboard widgets.
-	 *
-	 * @return int May be null if the corresponding POST field is undefined or invalid.
-	 */
-	public function getPostSquareSize()
-	{
-		return isset($_POST['squareSize']) ? RPBChessboardHelperValidation::validateSquareSize($_POST['squareSize']) : null;
-	}
-
-
-	/**
-	 * New default show-coordinates parameter for the chessboard widgets.
-	 *
-	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
-	 */
-	public function getPostShowCoordinates()
-	{
-		return $this->getPostBooleanParameter('showCoordinates');
-	}
-
-
-	/**
-	 * New FEN-compatibility-mode parameter.
-	 *
-	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
-	 */
-	public function getPostFENCompatibilityMode()
-	{
-		return $this->getPostBooleanParameter('fenCompatibilityMode');
-	}
-
-
-	/**
-	 * New PGN-compatibility-mode parameter.
-	 *
-	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
-	 */
-	public function getPostPGNCompatibilityMode()
-	{
-		return $this->getPostBooleanParameter('pgnCompatibilityMode');
-	}
-
-
-	/**
-	 * Return and validate a boolean post parameter with the given name.
+	 * Load and validate a boolean post parameter with the given name.
 	 *
 	 * @param string $paramName Name of the parameter to return.
 	 * @return boolean May be null if the corresponding POST field is undefined or invalid.
 	 */
-	private function getPostBooleanParameter($paramName)
+	private function loadBooleanParameter($paramName)
 	{
 		return isset($_POST[$paramName]) ? RPBChessboardHelperValidation::validateBooleanFromInt($_POST[$paramName]) : null;
+	}
+
+
+	/**
+	 * Update the plugin general options.
+	 *
+	 * @return string
+	 */
+	public function updateOptions()
+	{
+		// Set the square size parameter.
+		if(isset($this->squareSize)) {
+			update_option('rpbchessboard_squareSize', $this->squareSize);
+		}
+
+		// Set the boolean parameters.
+		$this->updateBooleanParameter('showCoordinates'     , $this->showCoordinates     );
+		$this->updateBooleanParameter('fenCompatibilityMode', $this->fenCompatibilityMode);
+		$this->updateBooleanParameter('pgnCompatibilityMode', $this->pgnCompatibilityMode);
+
+		// Notify the user.
+		return __('Settings saved.', 'rpbchessboard');
 	}
 
 

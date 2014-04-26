@@ -18,22 +18,43 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
  *                                                                            *
  ******************************************************************************/
-?>
 
-<h2>
-	<?php
-		echo __('Chess games and diagrams', 'rpbchessboard') . ' &ndash; ' .
-			htmlspecialchars($model->getTitle());
-	?>
-</h2>
 
-<div id="rpbchessboard-admin-javascript-warning" class="rpbchessboard-javascript-warning">
-	<?php
-		_e('To work properly, the RPB Chessboard plugin needs javascript to be activated in your browser.',
-			'rpbchessboard');
-	?>
-</div>
+require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
 
-<script type="text/javascript">
-	hideJavascriptWarning('rpbchessboard-admin-javascript-warning');
-</script>
+
+/**
+ * Model associated to the 'Options' page in the backend.
+ */
+class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdminPage
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->loadTrait('ChessWidgetDefault');
+		$this->loadTrait('ChessWidgetLimits' );
+		$this->loadTrait('Compatibility'     );
+	}
+
+
+	/**
+	 * URL to which the the request for modifying the options of the plugin will be dispatched.
+	 *
+	 * @return string
+	 */
+	public function getFormActionURL()
+	{
+		return site_url().'/wp-admin/admin.php?page=rpbchessboard-options';
+	}
+
+
+	/**
+	 * Action code corresponding to the request for modifying the options of the plugin.
+	 *
+	 * @return string
+	 */
+	public function getFormAction()
+	{
+		return 'update-options';
+	}
+}

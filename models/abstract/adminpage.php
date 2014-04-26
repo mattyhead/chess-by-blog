@@ -20,29 +20,67 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/abstract/abstractmodel.php');
+require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/abstractmodel.php');
 
 
 /**
- * Base class for the models used in the backend of the RPBChessboard plugin.
+ * Base class for the models used to render the plugin administration pages.
  */
-abstract class RPBChessboardAbstractAdminModel extends RPBChessboardAbstractModel
+abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstractModel
 {
+	private $adminPageName;
+	private $title;
 	private $postAction;
+	private $postMessage;
 
 
-	public function getViewName()
+	/**
+	 * Constructor.
+	 */
+	public function __construct()
 	{
-		return 'Admin';
+		parent::__construct();
+		$this->setTemplateName($this->getAdminPageName());
 	}
 
 
 	/**
-	 * Title of the page in the backend.
+	 * Use the "AdminPage" view by default.
 	 *
 	 * @return string
 	 */
-	public abstract function getTitle();
+	public function getViewName()
+	{
+		return 'AdminPage';
+	}
+
+
+	/**
+	 * Name of the administration page.
+	 *
+	 * @return string
+	 */
+	public function getAdminPageName()
+	{
+		if(!isset($this->adminPageName)) {
+			$this->adminPageName = preg_match('/^AdminPage(.*)$/', $this->getName(), $matches) ? $matches[1] : '';
+		}
+		return $this->adminPageName;
+	}
+
+
+	/**
+	 * Human-readable title of the page.
+	 *
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		if(!isset($this->title)) {
+			$this->title = htmlspecialchars_decode(get_admin_page_title(), ENT_QUOTES);
+		}
+		return $this->title;
+	}
 
 
 	/**
@@ -60,5 +98,28 @@ abstract class RPBChessboardAbstractAdminModel extends RPBChessboardAbstractMode
 			$this->postAction = isset($_POST['rpbchessboard_action']) ? $_POST['rpbchessboard_action'] : '';
 		}
 		return $this->postAction;
+	}
+
+
+	/**
+	 * Human-readable message informing the user about the result of the POST action.
+	 * or an empty string if no action were performed.
+	 *
+	 * @return string
+	 */
+	public function getPostMessage()
+	{
+		return isset($this->postMessage) ? $this->postMessage : '';
+	}
+
+
+	/**
+	 * Set the POST action message.
+	 *
+	 * @param string $message
+	 */
+	public function setPostMessage($message)
+	{
+		$this->postMessage = $message;
 	}
 }
