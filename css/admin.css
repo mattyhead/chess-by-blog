@@ -218,10 +218,10 @@
 	width: 85%;
 }
 
-#rpbchessboard-admin-pgnAnnotations .rpbchessboard-admin-column-left,
-#rpbchessboard-admin-pgnAnnotations .rpbchessboard-admin-column-right,
-#rpbchessboard-admin-pgnCommentaries .rpbchessboard-admin-column-left,
-#rpbchessboard-admin-pgnCommentaries .rpbchessboard-admin-column-right,
+#rpbchessboard-admin-pgnNAGs .rpbchessboard-admin-column-left,
+#rpbchessboard-admin-pgnNAGs .rpbchessboard-admin-column-right,
+#rpbchessboard-admin-pgnComments .rpbchessboard-admin-column-left,
+#rpbchessboard-admin-pgnComments .rpbchessboard-admin-column-right,
 #rpbchessboard-admin-pgnVariations .rpbchessboard-admin-column-left,
 #rpbchessboard-admin-pgnVariations .rpbchessboard-admin-column-right,
 #rpbchessboard-admin-pgnDiagrams .rpbchessboard-admin-column-left,
@@ -233,6 +233,11 @@
 
 /******************************************************************************/
 /*** About page ***/
+
+#rpbchessboard-admin-about ul {
+	list-style: square outside;
+	padding-left: 1.5em;
+}
 
 #rpbchessboard-admin-translator-list {
 	display: table;
@@ -248,7 +253,7 @@
 }
 
 #rpbchessboard-admin-translator-list dd {
-	padding-left: 15px;
+	padding-left: 1.5em;
 }
 
 #rpbchessboard-admin-translator-list img {

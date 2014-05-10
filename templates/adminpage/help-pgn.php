@@ -238,9 +238,9 @@
 
 
 
-	<h4><?php _e('Annotations', 'rpbchessboard'); ?></h4>
+	<h4><?php _e('NAGs (aka. <em>Numeric Annotation Glyphs</em>)', 'rpbchessboard'); ?></h4>
 
-	<div id="rpbchessboard-admin-pgnAnnotations" class="rpbchessboard-admin-columns">
+	<div id="rpbchessboard-admin-pgnNAGs" class="rpbchessboard-admin-columns">
 		<div class="rpbchessboard-admin-column-left">
 			<div class="rpbchessboard-admin-code-block">
 				[<?php echo htmlspecialchars($model->getPGNShortcode()); ?>]
@@ -250,14 +250,14 @@
 		</div>
 		<div class="rpbchessboard-admin-column-right">
 			<div class="rpbchessboard-admin-visu-block">
-				<div id="rpbchessboard-admin-annotations-example-in" class="rpbchessboard-in">
+				<div id="rpbchessboard-admin-NAGs-example-in" class="rpbchessboard-in">
 					1.e4 !! ! !? ?! ? ?? +- +/- +/= = inf =/+ -/+ -+ *
 				</div>
-				<div id="rpbchessboard-admin-annotations-example-out" class="rpbchessboard-out rpbchessboard-invisible">
+				<div id="rpbchessboard-admin-NAGs-example-out" class="rpbchessboard-out rpbchessboard-invisible">
 					<?php include(RPBCHESSBOARD_ABSPATH.'templates/common/pgncontent.php'); ?>
 				</div>
 				<script type="text/javascript">
-					processPGN('rpbchessboard-admin-annotations-example-in', 'rpbchessboard-admin-annotations-example-out');
+					processPGN('rpbchessboard-admin-NAGs-example-in', 'rpbchessboard-admin-NAGs-example-out');
 				</script>
 			</div>
 		</div>
@@ -271,10 +271,13 @@
 				'(for instance, %1$s&quot;1.e4 $1&quot;%2$s). This is what is advocated by the PGN norm, '.
 				'which defines equivalences between this syntax and the human-readable one '.
 				'(for instance, %1$s&quot;$1&quot;%2$s is equivalent to %1$s&quot;!&quot;%2$s). '.
-				'Both syntaxes are understood by the RPB Chessboard plugin.',
+				'Both syntaxes are understood by the RPB Chessboard plugin. '.
+				'See the %3$slist of NAGs%4$s.',
 			'rpbchessboard'),
 			'<span class="rpbchessboard-admin-code-inline">',
-			'</span>'
+			'</span>',
+			sprintf('<a href="%1$s" target="_blank">', __('http://en.wikipedia.org/wiki/Numeric_Annotation_Glyphs', 'rpbchessboard')),
+			'</a>'
 		); ?>
 	</p>
 
@@ -282,22 +285,22 @@
 
 
 
-	<h4><?php _e('Commentaries', 'rpbchessboard'); ?></h4>
+	<h4><?php _e('Comments', 'rpbchessboard'); ?></h4>
 
-	<div id="rpbchessboard-admin-pgnCommentaries" class="rpbchessboard-admin-columns">
+	<div id="rpbchessboard-admin-pgnComments" class="rpbchessboard-admin-columns">
 		<div class="rpbchessboard-admin-column-left">
 			<div class="rpbchessboard-admin-code-block">
 				[<?php echo htmlspecialchars($model->getPGNShortcode()); ?>]<br/>
 				1. d4
 				{<?php
-					echo sprintf(__('I\'m a %1$sshort%2$s commentary.', 'rpbchessboard'),
+					echo sprintf(__('I\'m a %1$sshort%2$s comment.', 'rpbchessboard'),
 						'&lt;strong style=&quot;color:red;&quot;&gt;', '&lt;/strong&gt;');
 				?>}
 				1... Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 d5 5. cxd5 Qxd5 6. Nf3 Qf5 7. Qxf5 exf5
 				8. a3 Be7 9. Bg5 Be6 10. e3 c6 11. Bd3 Nbd7 12. O-O h6 13. Bh4<br/>
 				<br/>
 				{<?php
-					echo sprintf(__('I\'m a %1$slong%2$s commentary.', 'rpbchessboard'),
+					echo sprintf(__('I\'m a %1$slong%2$s comment.', 'rpbchessboard'),
 						'&lt;strong style=&quot;color:red;&quot;&gt;', '&lt;/strong&gt;');
 				?>}<br/>
 				<br/>
@@ -308,28 +311,28 @@
 		</div>
 		<div class="rpbchessboard-admin-column-right">
 			<div class="rpbchessboard-admin-visu-block">
-				<div id="rpbchessboard-admin-commentaries-example-in" class="rpbchessboard-in">
+				<div id="rpbchessboard-admin-comments-example-in" class="rpbchessboard-in">
 					1. d4
 					{<?php
-						echo sprintf(__('I\'m a %1$sshort%2$s commentary.', 'rpbchessboard'),
+						echo sprintf(__('I\'m a %1$sshort%2$s comment.', 'rpbchessboard'),
 							'&lt;strong style=&quot;color:red;&quot;&gt;', '&lt;/strong&gt;');
 					?>}
 					1... Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 d5 5. cxd5 Qxd5 6. Nf3 Qf5 7. Qxf5 exf5
 					8. a3 Be7 9. Bg5 Be6 10. e3 c6 11. Bd3 Nbd7 12. O-O h6 13. Bh4
 
 					{<?php
-						echo sprintf(__('I\'m a %1$slong%2$s commentary.', 'rpbchessboard'),
+						echo sprintf(__('I\'m a %1$slong%2$s comment.', 'rpbchessboard'),
 							'&lt;strong style=&quot;color:red;&quot;&gt;', '&lt;/strong&gt;');
 					?>}
 
 					13... a5 14. Rac1 O-O 15. Ne2 g5 16. Bg3 Ne4 17. Nc3 Nxc3 18. Rxc3 Nf6
 					19. Rcc1 Rfd8 20. Rfd1 Rac8 *
 				</div>
-				<div id="rpbchessboard-admin-commentaries-example-out" class="rpbchessboard-out rpbchessboard-invisible">
+				<div id="rpbchessboard-admin-comments-example-out" class="rpbchessboard-out rpbchessboard-invisible">
 					<?php include(RPBCHESSBOARD_ABSPATH.'templates/common/pgncontent.php'); ?>
 				</div>
 				<script type="text/javascript">
-					processPGN('rpbchessboard-admin-commentaries-example-in', 'rpbchessboard-admin-commentaries-example-out');
+					processPGN('rpbchessboard-admin-comments-example-in', 'rpbchessboard-admin-comments-example-out');
 				</script>
 			</div>
 		</div>
@@ -338,11 +341,11 @@
 	<p>
 		<?php echo sprintf(
 			__(
-				'Text commentaries can be inserted, surrounded with braces. They can be rendered '.
-				'either inlined within the move sequence (&quot;short commentary&quot; style), '.
-				'or as separated blocks (&quot;long commentary&quot; style). To insert a commentary '.
+				'Text comments can be inserted, surrounded with braces. They can be rendered '.
+				'either inlined within the move sequence (&quot;short comment&quot; style), '.
+				'or as separated blocks (&quot;long comment&quot; style). To insert a comment '.
 				'as a separated block, let two blank lines before and after it in the PGN string. '.
-				'Also, notice that HTML tags are allowed within commentaries.',
+				'Also, notice that HTML tags are allowed within comments.',
 			'rpbchessboard'),
 			'<span class="rpbchessboard-admin-code-inline">',
 			'</span>'
@@ -391,7 +394,7 @@
 	<p>
 		<?php
 			_e(
-				'As for commentaries, variations can be rendered either inlined within the move sequence, '.
+				'As for comments, variations can be rendered either inlined within the move sequence, '.
 				'or as separated blocks if they are surrounded with two blank lines in the PGN string.',
 			'rpbchessboard');
 		?>
@@ -423,7 +426,7 @@
 			<p>
 				<?php echo sprintf(
 					__(
-						'Notice that %1$s[pgndiagram]%2$s tags must be inserted only in PGN commentaries.',
+						'Notice that %1$s[pgndiagram]%2$s tags must be inserted only in PGN comments.',
 					'rpbchessboard'),
 					'<span class="rpbchessboard-admin-code-inline">',
 					'</span>'
@@ -462,7 +465,7 @@
 				'The %1$s[%4$s][/%4$s]%2$s and %1$s[pgndiagram]%2$s tags accept the same attributes '.
 				'as the %1$s[%3$s][/%3$s]%2$s ones. For instance, using '.
 				'%1$s[%4$s square_size=...] ... [/%4$s]%2$s will affect the size of all the '.
-				'chess diagrams inserted in the commentaries of the corresponding chess game. '.
+				'chess diagrams inserted in the comments of the corresponding chess game. '.
 				'Setting %1$s[pgndiagram square_size=...]%2$s will affect only the corresponding diagram.',
 			'rpbchessboard'),
 			'<span class="rpbchessboard-admin-code-inline">',
