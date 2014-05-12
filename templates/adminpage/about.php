@@ -22,6 +22,10 @@
 
 <div id="rpbchessboard-admin-about">
 
+	<div class="rpbchessboard-admin-floatleft">
+		<img src="<?php echo htmlspecialchars($model->getIconURL()); ?>" alt="RPB Chessboard icon" />
+	</div>
+
 	<p>
 		<?php echo sprintf(
 			__(
@@ -39,7 +43,7 @@
 			<?php echo sprintf('%1$s / %2$s', __('Ask for help', 'rpbchessboard'), __('Report a problem', 'rpbchessboard')); ?>
 		</a>
 	</p>
-	<p class="description">
+	<p class="description rpbchessboard-admin-clearfix">
 		<?php echo sprintf(
 			__(
 				'If you encounter some bugs with this plugin, or if you wish to get new features in the future versions, '.
@@ -76,15 +80,15 @@
 	<h3><?php _e('Translation', 'rpbchessboard'); ?></h3>
 	<dl id="rpbchessboard-admin-translator-list">
 		<div>
-			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/de.png'; ?>" />Deutsch</dt>
+			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/de.png'; ?>" alt="German flag" />Deutsch</dt>
 			<dd>Markus Liebelt</dd>
 		</div>
 		<div>
-			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/gb.png'; ?>" />English</dt>
+			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/gb.png'; ?>" alt="British flag" />English</dt>
 			<dd>Yoann Le Montagner</dd>
 		</div>
 		<div>
-			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/fr.png'; ?>" />Français</dt>
+			<dt><img src="<?php echo RPBCHESSBOARD_URL.'/images/flags/fr.png'; ?>" alt="French flag" />Français</dt>
 			<dd>Yoann Le Montagner</dd>
 		</div>
 	</dl>
