@@ -21,7 +21,7 @@
 
 
 /**
- * Register the plugin administration pages in the Wordpress backend.
+ * Register the plugin administration pages in the WordPress backend.
  *
  * This class is not constructible. Call the static method `register()`
  * to trigger the registration operations.
@@ -85,7 +85,7 @@ abstract class RPBChessboardAdminPages
 	private static function printAdminPage($adminPageName)
 	{
 		require_once(RPBCHESSBOARD_ABSPATH . 'controllers/adminpage.php');
-		$controller = new RPBChessboardControllerAdminPage('AdminPage' . $adminPageName);
+		$controller = new RPBChessboardControllerAdminPage($adminPageName);
 		$controller->run();
 	}
 }

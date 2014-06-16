@@ -22,19 +22,32 @@
 
 <h2><?php echo htmlspecialchars($model->getTitle()); ?></h2>
 
-<div id="rpbchessboard-admin-javascript-warning" class="error">
-	<p><?php
-		_e('To work properly, the RPB Chessboard plugin needs javascript to be activated in your browser.',
-			'rpbchessboard');
-	?></p>
-</div>
+<noscript>
+	<div class="error">
+		<p><?php
+			_e('To work properly, the RPB Chessboard plugin needs javascript to be activated in your browser.',
+				'rpbchessboard');
+		?></p>
+	</div>
+</noscript>
 
-<?php if($model->getPostMessage()!=''): ?>
+<?php if($model->getPostMessage() !== ''): ?>
 	<div class="updated">
 		<p><?php echo htmlspecialchars($model->getPostMessage()); ?></p>
 	</div>
 <?php endif; ?>
 
-<script type="text/javascript">
-	hideJavascriptWarning('rpbchessboard-admin-javascript-warning');
-</script>
+<?php if($model->hasSubPages()): ?>
+	<ul id="rpbchessboard-subPageSelector" class="subsubsub">
+		<?php foreach($model->getSubPages() as $subPage): ?>
+
+			<li>
+				<a
+					href="<?php echo htmlspecialchars($subPage->link); ?>"
+					class="<?php if($subPage->selected) { echo 'current'; } ?>"
+				><?php echo htmlspecialchars($subPage->label); ?></a>
+			</li>
+
+		<?php endforeach; ?>
+	</ul>
+<?php endif; ?>

@@ -89,12 +89,19 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 == Changelog ==
 
+= 2.99 (June 16, 2014) =
+* Add: piece symbol customization.
+* Add: navigation board next to the move list (not only in a popup frame).
+* Fix several bugs related to PGN game parsing and rendering.
+* Code refactoring (use the jQuery widget framework for PGN rendering in particular).
+* Provide minified versions of the JS scripts.
+
 = 2.4.3 (May 12, 2014) =
 * Plugin icon & banner.
 
 = 2.4.2 (May 10, 2014) =
 * Update the documentation and add links toward Yo35.org.
-* Tested up to Wordpress 3.9.1.
+* Tested up to WordPress 3.9.1.
 
 = 2.4.1 (April 30, 2014) =
 * Improve code robustness with respect to dynamically loaded content (e.g. through AJAX requests).
@@ -105,7 +112,7 @@ please have a look to the general [plugin management page](http://codex.wordpres
 * PHP code refactoring (backend).
 
 = 2.3.2 (April 19, 2014) =
-* Tested up to Wordpress 3.9.
+* Tested up to WordPress 3.9.
 * Minor code cleaning.
 
 = 2.3.1 (April 4, 2014) =
@@ -122,13 +129,13 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 = 2.2 (February 16, 2014) =
 * Faster rendering of the chess diagrams.
-* Tested up to Wordpress 3.8.1.
+* Tested up to WordPress 3.8.1.
 
 = 2.1 (January 3, 2014) =
 * Compatibility mode to avoid conflicts with other plugins that might use the `[fen][/fen]` and `[pgn][/pgn]` shortcodes.
 
 = 2.0.1 (December 13, 2013) =
-* Tested up to Wordpress 3.8.
+* Tested up to WordPress 3.8.
 
 = 2.0 (November 10, 2013) =
 * Add: flip attribute (to change the orientation of the chessboards).
@@ -153,3 +160,11 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 = 1.99.1 (October 31, 2013) =
 * First public version.
+
+
+
+== Upgrade Notice ==
+
+= 2.99 =
+The way margins above and below `[fen][/fen]` and `[pgn][/pgn]` sections are set has been changed,
+to make it more independent of the theme: you should check the new margins to ensure their correctness.

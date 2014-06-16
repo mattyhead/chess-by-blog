@@ -1,0 +1,242 @@
+/******************************************************************************
+ *                                                                            *
+ *    This file is part of RPB Chessboard, a Wordpress plugin.                *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
+ *                                                                            *
+ *    This program is free software: you can redistribute it and/or modify    *
+ *    it under the terms of the GNU General Public License as published by    *
+ *    the Free Software Foundation, either version 3 of the License, or       *
+ *    (at your option) any later version.                                     *
+ *                                                                            *
+ *    This program is distributed in the hope that it will be useful,         *
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
+ *    GNU General Public License for more details.                            *
+ *                                                                            *
+ *    You should have received a copy of the GNU General Public License       *
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
+ *                                                                            *
+ ******************************************************************************/
+
+
+
+/******************************************************************************/
+/*** Parsing error box ***/
+
+.uichess-chessgame-error {
+	text-align: left;
+	font-family: sans-serif;
+	font-size: 12px;
+	line-height: 1.3em;
+	color: #800;
+	background-color: #fdd;
+	border: solid 1px #c00;
+	padding: 0.75em;
+}
+
+.uichess-chessgame-errorTitle {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.uichess-chessgame-errorMessage,
+.uichess-chessgame-errorAt,
+.uichess-chessgame-errorAtCode { 
+	margin-top: 0.4em;
+}
+
+.uichess-chessgame-errorAtCode {
+	white-space: pre-wrap;
+	font-family: monospace;
+	line-height: 1.5em;
+	color: #400;
+	border: solid 1px #aa0;
+	background-color: #ffd;
+	padding: 0.75em 1em 0.15em;
+}
+
+
+
+/******************************************************************************/
+/*** PGN headers ***/
+
+.uichess-chessgame-colorTag {
+	width : 1.2em;
+	height: 1.2em;
+	vertical-align: middle;
+	display: inline-block;
+	border: 1px solid black;
+}
+
+.uichess-chessgame-whitePlayer .uichess-chessgame-colorTag {
+	background-color: white;
+}
+
+.uichess-chessgame-blackPlayer .uichess-chessgame-colorTag {
+	background-color: black;
+}
+
+.uichess-chessgame-titleRatingGroup:before,
+.uichess-chessgame-round:before {
+	content: "\a0("; /* \a0 == &nbsp; */
+}
+
+.uichess-chessgame-titleRatingGroup:after,
+.uichess-chessgame-round:after {
+	content: ")";
+}
+
+.uichess-chessgame-playerTitle + .uichess-chessgame-playerRating:before {
+	content: "\a0"; /* \a0 == &nbsp; */
+}
+
+.uichess-chessgame-round,
+.uichess-chessgame-annotator {
+	font-style: italic;
+}
+
+.uichess-chessgame-date + .uichess-chessgame-site:before {
+	content: "\a0\2013\a0"; /* \a0 == &nbsp;   \2013 == &ndash; */
+}
+
+
+
+/******************************************************************************/
+/*** PGN body ***/
+
+.uichess-chessgame-move {
+	font-weight: bold;
+	display: inline-block;
+	padding-left : 1px;
+	padding-right: 1px;
+}
+
+.uichess-chessgame-initialMove,
+.uichess-chessgame-moveNumber.uichess-chessgame-hidden {
+	display: none;
+}
+
+.ui-dialog-title .uichess-chessgame-moveNumber.uichess-chessgame-hidden {
+	display: inline;
+}
+
+.uichess-chessgame-clickableMoves .uichess-chessgame-move:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.uichess-chessgame-subVariation .uichess-chessgame-move {
+	font-weight: inherit;
+}
+
+span.uichess-chessgame-variation:before {
+	content: "(";
+}
+
+span.uichess-chessgame-variation:after {
+	content: ")";
+}
+
+.uichess-chessgame-result {
+	font-weight: bold;
+}
+
+span.uichess-chessgame-move,
+span.uichess-chessgame-comment,
+span.uichess-chessgame-variation {
+	margin-right: 0.4em;
+}
+
+span.uichess-chessgame-move:last-child,
+span.uichess-chessgame-comment:last-child,
+span.uichess-chessgame-variation:last-child {
+	margin-right: 0px;
+}
+
+div.uichess-chessgame-subVariation {
+	position: relative;
+	left: 1.5em;
+	width: calc(100% - 1.5em);
+}
+
+.uichess-chessgame-alphaFont  { font-family: "Chess Alpha" , sans-serif; }
+.uichess-chessgame-meridaFont { font-family: "Chess Merida", sans-serif; }
+.uichess-chessgame-piratFont  { font-family: "Chess Pirat" , sans-serif; }
+
+
+
+/******************************************************************************/
+/*** Vertical spacing ***/
+
+.uichess-chessgame-headers > div {
+	margin-bottom: 0.25em;
+}
+
+div.uichess-chessgame-variation > div {
+	margin-bottom: 0.5em;
+}
+
+.uichess-chessgame-headers > div:last-child,
+div.uichess-chessgame-variation > div:last-child {
+	margin-bottom: 0px;
+}
+
+.uichess-chessgame-headers + .uichess-chessgame-body {
+	margin-top: 0.25em;
+}
+
+.uichess-chessgame-headers + .uichess-chessgame-body.uichess-chessgame-moreSpace {
+	margin-top: 0.5em;
+}
+
+
+
+/******************************************************************************/
+/*** Navigation board ***/
+
+.uichess-chessgame-navigationBox.uichess-chessgame-floatLeft,
+.uichess-chessgame-navigationBox.uichess-chessgame-floatRight {
+	margin-bottom: 0.5em;
+}
+
+.uichess-chessgame-navigationBox.uichess-chessgame-floatLeft {
+	float: left;
+	margin-right: 0.5em;
+}
+
+.uichess-chessgame-navigationBox.uichess-chessgame-floatRight {
+	float: right;
+	margin-left: 0.5em;
+}
+
+.uichess-chessgame-clearLeft {
+	clear: left;
+}
+
+.uichess-chessgame-clearRight {
+	clear: right;
+}
+
+.uichess-chessgame-navigationButtons {
+	text-align: center;
+	margin-top: 0.75em;
+}
+
+
+
+/******************************************************************************/
+/*** Diagrams ***/
+
+.uichess-chessgame-diagramAnchor {
+	display: none;
+}
+
+.uichess-chessgame-body .uichess-chessgame-comment .uichess-chessgame-diagram {
+	margin-top   : 0.25em;
+	margin-bottom: 0.25em;
+}
+
+.uichess-chessgame-body.uichess-chessgame-moreSpace .uichess-chessgame-comment .uichess-chessgame-diagram {
+	margin-top   : 0.5em;
+	margin-bottom: 0.5em;
+}

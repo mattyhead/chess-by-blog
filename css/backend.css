@@ -1,0 +1,375 @@
+/******************************************************************************
+ *                                                                            *
+ *    This file is part of RPB Chessboard, a Wordpress plugin.                *
+ *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
+ *                                                                            *
+ *    This program is free software: you can redistribute it and/or modify    *
+ *    it under the terms of the GNU General Public License as published by    *
+ *    the Free Software Foundation, either version 3 of the License, or       *
+ *    (at your option) any later version.                                     *
+ *                                                                            *
+ *    This program is distributed in the hope that it will be useful,         *
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
+ *    GNU General Public License for more details.                            *
+ *                                                                            *
+ *    You should have received a copy of the GNU General Public License       *
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
+ *                                                                            *
+ ******************************************************************************/
+
+
+/******************************************************************************/
+/*** Vertical spacing ***/
+
+.rpbchessboard-columns,
+div.rpbchessboard-sourceCode,
+.rpbchessboard-tabs {
+	margin: 1em 0px;
+}
+
+.rpbchessboard-columns:first-child,
+div.rpbchessboard-sourceCode:first-child,
+.rpbchessboard-tabs:first-child,
+.rpbchessboard-adminPage p:first-child {
+	margin-top: 0px;
+}
+
+.rpbchessboard-columns:last-child,
+div.rpbchessboard-sourceCode:last-child,
+.rpbchessboard-tabs:last-child,
+.rpbchessboard-adminPage p:last-child {
+	margin-bottom: 0px;
+}
+
+.rpbchessboard-adminPage .error p,
+.rpbchessboard-adminPage .updated p {
+	padding-top   : 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.rpbchessboard-adminPage p + p.description {
+	margin-top: -0.75em;
+}
+
+
+
+/******************************************************************************/
+/*** Bullet lists ***/
+
+.rpbchessboard-adminPage ul {
+	list-style: square outside;
+	padding-left: 1.5em;
+}
+
+.rpbchessboard-adminPage ul.subsubsub {
+	list-style: none outside;
+	padding-left: 0px;
+}
+
+
+
+/******************************************************************************/
+/*** Column layout ***/
+
+.rpbchessboard-columns {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+}
+
+.rpbchessboard-columns > div {
+	margin-left : 10px;
+	margin-right: 10px;
+}
+
+.rpbchessboard-columns > div:first-child {
+	margin-left: 0px;
+}
+
+.rpbchessboard-columns > div:last-child {
+	margin-right: 0px;
+}
+
+
+
+/******************************************************************************/
+/*** Floating objects ***/
+
+.rpbchessboard-floatLeft {
+	float: left;
+	margin-right: 1em;
+}
+
+.rpbchessboard-floatRight {
+	float: right;
+	margin-left: 1em;
+}
+
+.rpbchessboard-clearfix:after {
+		display: block;
+		visibility: hidden;
+		content: " ";
+		clear: both;
+}
+
+
+
+/******************************************************************************/
+/*** Sub-page selector ***/
+
+#rpbchessboard-subPageSelector {
+	float: none;
+	margin-bottom: 1em;
+}
+
+#rpbchessboard-subPageSelector li:after {
+	content: "|";
+}
+
+#rpbchessboard-subPageSelector li:last-child:after {
+	content: none;
+}
+
+
+
+/******************************************************************************/
+/*** Source code and visualization blocks ***/
+
+.rpbchessboard-sourceCode {
+	font-family: Consolas, Monaco, monospace;
+	font-style : normal;
+}
+
+div.rpbchessboard-sourceCode {
+	border: solid 1px #bbb;
+	background-color: #ffd;
+	padding: 8px 10px 8px;
+}
+
+.rpbchessboard-visuBlock {
+	border: solid 1px #bbb;
+	background-color: white;
+	margin-right : 5px;
+	margin-bottom: 5px;
+	box-shadow: 5px 5px 3px #888;
+	padding: 10px 15px 10px;
+	font-family: Times, serif;
+	font-size  : 17px;
+	line-height: 1.3em;
+}
+
+.rpbchessboard-visuBlock > * {
+	font-family: inherit;
+	font-size  : inherit;
+	line-height: inherit;
+	margin-top   : 15px;
+	margin-bottom: 15px;
+}
+
+.rpbchessboard-visuBlock > *:first-child {
+	margin-top: 0px;
+}
+
+.rpbchessboard-visuBlock > *:last-child {
+	margin-bottom: 0px;
+}
+
+
+
+/******************************************************************************/
+/*** jQuery tabs (with no theme) ***/
+
+.rpbchessboard-tabs.ui-tabs .ui-tabs-panel {
+	border: solid 1px #ddd;
+	background: #fcfcfc;
+}
+
+.rpbchessboard-tabs.ui-tabs .ui-tabs-nav li {
+	border-top : solid 1px #ddd;
+	border-left: solid 1px #ddd;
+	border-right: solid 1px #ddd;
+	background: #eee;
+	cursor: pointer;
+}
+
+.rpbchessboard-tabs.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+	background: #fcfcfc;
+}
+
+
+
+/******************************************************************************/
+/*** Memo page ***/
+
+#rpbchessboard-memoPage {
+	margin-top: 1em;
+}
+
+#rpbchessboard-memoPage .rpbchessboard-columns > div {
+	width: 50%;
+}
+
+
+
+/******************************************************************************/
+/*** Options page ***/
+
+#rpbchessboard-optionPage .rpbchessboard-columns > div:first-child {
+	width: 250px;
+}
+
+#rpbchessboard-squareSizeField {
+	text-align: right;
+}
+
+#rpbchessboard-optionPage input[name="pieceSymbols"] {
+	margin-left: 3em;
+}
+
+#rpbchessboard-optionPage input[name="pieceSymbols"]:first-child {
+	margin-left: 0px;
+}
+
+.rpbchessboard-pieceSymbolLabel {
+	display: inline-block;
+	width : 40px;
+	height: 40px;
+	background-image: url(sprite/all-40.png);
+	vertical-align: middle;
+}
+
+.rpbchessboard-pieceSymbolField {
+	vertical-align: middle;
+	text-align: center;
+	margin-right: 3em;
+}
+
+.rpbchessboard-pieceSymbolField:last-child {
+	margin-right: 0px;
+}
+
+#rpbchessboard-navigationBoardFields {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 0.5em;
+}
+
+#rpbchessboard-navigationBoardFields > div {
+	margin-left: 30px;
+}
+
+#rpbchessboard-navigationBoardFields > div:first-child {
+	margin-left: 0px;
+}
+
+#rpbchessboard-navigationBoardFields input[name="navigationBoard"] {
+	display: none;
+}
+
+#rpbchessboard-navigationBoardFields input[name="navigationBoard"] + label {
+	display: block;
+	padding: 14px;
+	line-height: 0px;
+}
+
+#rpbchessboard-navigationBoardFields input[name="navigationBoard"]:checked + label {
+	border: solid 4px rgb(0, 116, 162);
+	padding: 10px;
+}
+
+
+
+/******************************************************************************/
+/*** Help pages ***/
+
+#rpbchessboard-helpFENPage .rpbchessboard-columns > div,
+#rpbchessboard-helpPGNPage .rpbchessboard-columns > div {
+	width: 50%;
+}
+
+#rpbchessboard-helpFENPage #rpbchessboard-fenAttribute2 .rpbchessboard-columns > div:nth-child(1) {
+	width: 33%;
+}
+
+#rpbchessboard-helpFENPage #rpbchessboard-fenAttribute2 .rpbchessboard-columns > div:nth-child(2) {
+	width: 67%;
+}
+
+
+
+/******************************************************************************/
+/*** About page ***/
+
+.rpbchessboard-translatorList {
+	display: table;
+}
+
+.rpbchessboard-translatorList div {
+	display: table-row;
+}
+
+.rpbchessboard-translatorList dt,
+.rpbchessboard-translatorList dd {
+	display: table-cell;
+}
+
+.rpbchessboard-translatorList dd {
+	padding-left: 1.5em;
+}
+
+.rpbchessboard-translatorList img {
+	vertical-align: middle;
+	margin-right: 0.25em;
+}
+
+
+
+/******************************************************************************/
+/*** Edit FEN dialog ***/
+
+.rpbchessboard-editFen-invisible {
+	display: none;
+}
+
+#rpbchessboard-editFen-castleRights {
+	text-align: center;
+	table-layout: fixed;
+	margin-top: 5px;
+}
+
+#rpbchessboard-editFen-castleRights td {
+	vertical-align: middle;
+	padding: 0px 5px 0px;
+}
+
+#rpbchessboard-editFen-fenArea {
+	margin: 0px 10px;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#rpbchessboard-editFen-fenArea > span {
+	margin-right: 5px;
+}
+
+#rpbchessboard-editFen-fenArea > input {
+	width: 100%;
+}
+
+.rpbchessboard-editFen-turnFlag {
+	display: inline-block;
+	vertical-align: middle;
+}

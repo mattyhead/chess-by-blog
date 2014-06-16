@@ -28,12 +28,21 @@ require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
  */
 class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdminPage
 {
+	private $localizedPieceSymbolButtonAvailable;
+	private $selectedPieceSymbolButton;
+	private $pieceSymbolCustomValues;
+
+
 	public function __construct()
 	{
 		parent::__construct();
-		$this->loadTrait('ChessWidgetDefault');
-		$this->loadTrait('ChessWidgetLimits' );
-		$this->loadTrait('Compatibility'     );
+		$this->loadTrait('DefaultOptions');
+		$this->loadTrait('Compatibility' );
+		$this->loadTrait('URLs'          );
+
+		// Create the sub-pages.
+		$this->addSubPage('optionsgeneral'      , __('Default aspect & behavior settings'    , 'rpbchessboard'), true);
+		$this->addSubPage('optionscompatibility', __('Compatibility with other chess plugins', 'rpbchessboard'));
 	}
 
 
@@ -44,7 +53,7 @@ class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdmin
 	 */
 	public function getFormActionURL()
 	{
-		return site_url().'/wp-admin/admin.php?page=rpbchessboard-options';
+		return $this->getSubPage($this->getSelectedSubPageName())->link;
 	}
 
 
@@ -56,5 +65,114 @@ class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdmin
 	public function getFormAction()
 	{
 		return 'update-options';
+	}
+
+
+	/**
+	 * Minimum square size of the chessboard widgets.
+	 *
+	 * @return int
+	 */
+	public function getMinimumSquareSize()
+	{
+		return RPBChessboardHelperValidation::MINIMUM_SQUARE_SIZE;
+	}
+
+
+	/**
+	 * Maximum square size of the chessboard widgets.
+	 *
+	 * @return int
+	 */
+	public function getMaximumSquareSize()
+	{
+		return RPBChessboardHelperValidation::MAXIMUM_SQUARE_SIZE;
+	}
+
+
+	/**
+	 * Number of digits of the maximum square size parameter.
+	 *
+	 * @return int
+	 */
+	public function getDigitNumberForSquareSize()
+	{
+		$maxVal = $this->getMaximumSquareSize();
+		return 1 + floor(log10($maxVal));
+	}
+
+
+	/**
+	 * Whether the "localized piece symbol" radio button is available or not.
+	 *
+	 * @return boolean
+	 */
+	public function isLocalizedPieceSymbolButtonAvailable()
+	{
+		if(!isset($this->localizedPieceSymbolButtonAvailable)) {
+			$englishPieceSymbols = 'KQRBNP';
+			$localizedPieceSymbols =
+				/*i18n King symbol   */ __('K', 'rpbchessboard') .
+				/*i18n Queen symbol  */ __('Q', 'rpbchessboard') .
+				/*i18n Rook symbol   */ __('R', 'rpbchessboard') .
+				/*i18n Bishop symbol */ __('B', 'rpbchessboard') .
+				/*i18n Knight symbol */ __('N', 'rpbchessboard') .
+				/*i18n Pawn symbol   */ __('P', 'rpbchessboard');
+			$this->localizedPieceSymbolButtonAvailable = ($englishPieceSymbols !== $localizedPieceSymbols);
+		}
+		return $this->localizedPieceSymbolButtonAvailable;
+	}
+
+
+	/**
+	 * Piece symbol radio button that is initially selected when the form is displayed.
+	 *
+	 * @return boolean
+	 */
+	public function getSelectedPieceSymbolButton()
+	{
+		if(!isset($this->selectedPieceSymbolButton)) {
+			switch($this->getDefaultPieceSymbols()) {
+				case 'native'   : $this->selectedPieceSymbolButton = 'english'  ; break;
+				case 'figurines': $this->selectedPieceSymbolButton = 'figurines'; break;
+				case 'localized':
+					$this->selectedPieceSymbolButton = $this->isLocalizedPieceSymbolButtonAvailable() ? 'localized' : 'english';
+					break;
+				default:
+					$this->selectedPieceSymbolButton = 'custom';
+					break;
+			}
+		}
+		return $this->selectedPieceSymbolButton;
+	}
+
+
+	/**
+	 * Default value for the piece symbol custom fields.
+	 *
+	 * @param string $piece `'K'`, `'Q'`, `'R'`, `'B'`, `'N'`, or `'P'`.
+	 * @return string
+	 */
+	public function getPieceSymbolCustomValue($piece)
+	{
+		if(!isset($this->pieceSymbolCustomValues)) {
+			if($this->getSelectedPieceSymbolButton() === 'custom') {
+				$pieceSymbols = $this->getDefaultPieceSymbols();
+				$this->pieceSymbolCustomValues = array(
+					'K' => substr($pieceSymbols, 1, 1),
+					'Q' => substr($pieceSymbols, 2, 1),
+					'R' => substr($pieceSymbols, 3, 1),
+					'B' => substr($pieceSymbols, 4, 1),
+					'N' => substr($pieceSymbols, 5, 1),
+					'P' => substr($pieceSymbols, 6, 1)
+				);
+			}
+			else {
+				$this->pieceSymbolCustomValues = array(
+					'K' => '', 'Q' => '', 'R' => '', 'B' => '', 'N' => '', 'P' => ''
+				);
+			}
+		}
+		return $this->pieceSymbolCustomValues[$piece];
 	}
 }
