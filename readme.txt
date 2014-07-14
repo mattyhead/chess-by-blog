@@ -82,12 +82,17 @@ please have a look to the general [plugin management page](http://codex.wordpres
 3. Chess diagram in a post with the Twenty Ten theme.
 4. Chess game in a post with the Twenty Ten theme.
 5. When clicking on a move, a popup frame is displayed, showing the corresponding position.
-6. Chess game with comments and sub-variations. HTML formatting in text comments is supported.
-7. Graphical assistant to create and modify chess diagrams in the post/page editor.
+6. A navigation board can be added near the move list.
+7. Chess game with comments and sub-variations. HTML formatting in text comments is supported.
+8. Graphical assistant to create and modify chess diagrams in the post/page editor.
 
 
 
 == Changelog ==
+
+= 3.0 (July 14, 2014) =
+* Add: cancel/reset buttons in the setting pages.
+* Minor fixes.
 
 = 2.99.1 (June 27, 2014) =
 * Fix compatibility issue with PHP <= 5.2.

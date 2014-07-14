@@ -18,59 +18,39 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
  *                                                                            *
  ******************************************************************************/
+?>
 
+<p class="submit">
 
-require_once(RPBCHESSBOARD_ABSPATH . 'controllers/abstractcontroller.php');
+	<input type="submit" class="button-primary" value="<?php _e('Save changes', 'rpbchessboard'); ?>" />
 
+	<a class="button" href="<?php echo htmlspecialchars($model->getFormActionURL()); ?>"><?php _e('Cancel', 'rpbchessboard'); ?></a>
 
-/**
- * Show the requested plugin administration page.
- */
-class RPBChessboardControllerAdminPage extends RPBChessboardAbstractController
-{
-	/**
-	 * Constructor
-	 *
-	 * @param string $adminPageName Name of the administration page.
-	 */
-	public function __construct($adminPageName)
-	{
-		parent::__construct('AdminPage' . $adminPageName);
-	}
+	<a class="button" id="rpbchessboard-resetButton" href="#"><?php _e('Reset settings', 'rpbchessboard'); ?></a>
 
+	<script type="text/javascript">
 
-	/**
-	 * Entry-point of the controller.
-	 */
-	public function run()
-	{
-		// Process the post-action, if any.
-		switch($this->getModel()->getPostAction()) {
-			case 'update-options'            : $this->executeAction('PostOptions' , 'updateOptions'     ); break;
-			case 'reset-optionsgeneral'      : $this->executeAction('ResetOptions', 'resetGeneral'      ); break;
-			case 'reset-optionscompatibility': $this->executeAction('ResetOptions', 'resetCompatibility'); break;
-			default: break;
-		}
+		jQuery(document).ready(function($) {
 
-		// Create and display the view.
-		$this->getView()->display();
-	}
+			$('#rpbchessboard-resetButton').click(function(e) {
 
+				e.preventDefault();
 
-	/**
-	 * Load the trait `$traitName`, and execute the method `$methodName` supposedly defined by the trait.
-	 *
-	 * @param string $traitName
-	 * @param string $methodName
-	 * @param string $capability Required capability to execute the action. Default is `'manage_options'`.
-	 */
-	private function executeAction($traitName, $methodName, $capability='manage_options')
-	{
-		if(!current_user_can($capability)) {
-			return;
-		}
-		$model = $this->getModel();
-		$model->loadTrait($traitName);
-		$model->setPostMessage($model->$methodName());
-	}
-}
+				// Ask for confirmation from the user.
+				var message = <?php
+					echo json_encode(__('This will reset all the settings in this page to their default values. Press OK to confirm...', 'rpbchessboard'));
+				?>;
+				if(!confirm(message)) { return; }
+
+				// Change the action and validate the form.
+				var form = $(this).closest('form');
+				$('input[name="rpbchessboard_action"]', form).val(<?php echo json_encode($model->getFormResetAction()); ?>);
+				form.submit();
+
+			});
+
+		});
+
+	</script>
+
+</p>
