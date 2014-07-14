@@ -177,3 +177,4 @@ please have a look to the general [plugin management page](http://codex.wordpres
 = 2.99 =
 The way margins above and below `[fen][/fen]` and `[pgn][/pgn]` sections are set has been changed,
 to make it more independent of the theme: you should check the new margins to ensure their correctness.
+
