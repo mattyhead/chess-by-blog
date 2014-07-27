@@ -53,6 +53,7 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
  * Compatibility mode to avoid conflicts with the other plugins that use
    the `[fen][/fen]` and `[pgn][/pgn]` shortcodes too.
  * Graphical assistant to create and modify chess diagrams in the post/page editor.
+ * Multi-language support.
 
 If you encounter some bugs with this plugin, or if you wish to get new features
 in the future versions, you can report/propose them
@@ -89,6 +90,10 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 
 == Changelog ==
+
+= 3.1 (July 27, 2014) =
+* Polish translation (thanks to Dawid Ziółkowski).
+* Minor fixes.
 
 = 3.0 (July 14, 2014) =
 * Add: cancel/reset buttons in the setting pages.
@@ -177,4 +182,3 @@ please have a look to the general [plugin management page](http://codex.wordpres
 = 2.99 =
 The way margins above and below `[fen][/fen]` and `[pgn][/pgn]` sections are set has been changed,
 to make it more independent of the theme: you should check the new margins to ensure their correctness.
-
