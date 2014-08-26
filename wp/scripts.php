@@ -33,18 +33,18 @@ abstract class RPBChessboardScripts
 		$ext = WP_DEBUG ? '.js' : '.min.js';
 
 		// chess.js (https://github.com/jhlywa/chess.js)
-		wp_register_script('rpbchessboard-chessjs', RPBCHESSBOARD_URL . '/third-party-libs/chess-js/chess' . $ext);
+		wp_register_script('rpbchessboard-chessjs', RPBCHESSBOARD_URL . 'third-party-libs/chess-js/chess' . $ext);
 
 		// Moment.js (http://momentjs.com/)
-		wp_register_script('rpbchessboard-momentjs', RPBCHESSBOARD_URL . '/third-party-libs/moment-js/moment' . $ext);
+		wp_register_script('rpbchessboard-momentjs', RPBCHESSBOARD_URL . 'third-party-libs/moment-js/moment' . $ext);
 
 		// PGN-parsing tools
-		wp_register_script('rpbchessboard-pgn', RPBCHESSBOARD_URL . '/js/pgn' . $ext, array(
+		wp_register_script('rpbchessboard-pgn', RPBCHESSBOARD_URL . 'js/pgn' . $ext, array(
 			'rpbchessboard-chessjs'
 		));
 
 		// Chessboard widget
-		wp_register_script('rpbchessboard-chessboard', RPBCHESSBOARD_URL . '/js/uichess-chessboard' . $ext, array(
+		wp_register_script('rpbchessboard-chessboard', RPBCHESSBOARD_URL . 'js/uichess-chessboard' . $ext, array(
 			'rpbchessboard-chessjs',
 			'jquery-ui-widget',
 			'jquery-ui-selectable',
@@ -53,7 +53,7 @@ abstract class RPBChessboardScripts
 		));
 
 		// Chessgame widget
-		wp_register_script('rpbchessboard-chessgame', RPBCHESSBOARD_URL . '/js/uichess-chessgame' . $ext, array(
+		wp_register_script('rpbchessboard-chessgame', RPBCHESSBOARD_URL . 'js/uichess-chessgame' . $ext, array(
 			'rpbchessboard-pgn',
 			'rpbchessboard-chessboard',
 			'rpbchessboard-momentjs',
@@ -83,13 +83,7 @@ abstract class RPBChessboardScripts
 
 	public static function callbackInlinedScripts()
 	{
-		// Localization for RPB Chessboard JavaScript files
 		include(RPBCHESSBOARD_ABSPATH . 'templates/localization.php');
-
-		// Moment.js configuration
-		if(isset(self::$momentJSLangCode)) {
-			echo '<script type="text/javascript">moment.locale(' . json_encode(self::$momentJSLangCode) . ');</script>';
-		}
 	}
 
 
@@ -107,22 +101,12 @@ abstract class RPBChessboardScripts
 			}
 
 			// If it exists, enqueue it, set the Moment.js language code, and return.
-			wp_enqueue_script('rpbchessboard-momentjs-localization', RPBCHESSBOARD_URL . '/' . $relativeFilePath, array(
+			wp_enqueue_script('rpbchessboard-momentjs-localization', RPBCHESSBOARD_URL . $relativeFilePath, array(
 				'rpbchessboard-momentjs'
 			));
-			self::$momentJSLangCode = $langCode;
 			return;
 		}
-
-		// Default language code for Moment.js
-		self::$momentJSLangCode = 'en';
 	}
-
-
-	/**
-	 * Language code to use to configure Moment.js
-	 */
-	private static $momentJSLangCode;
 
 
 	/**
@@ -132,10 +116,10 @@ abstract class RPBChessboardScripts
 	 */
 	private static function getBlogLangCodes()
 	{
-		$main_language = str_replace('_', '-', strtolower(get_locale()));
-		$retVal = array($main_language);
+		$mainLanguage = str_replace('_', '-', strtolower(get_locale()));
+		$retVal = array($mainLanguage);
 
-		if(preg_match('/([a-z]+)\\-([a-z]+)/', $main_language, $m)) {
+		if(preg_match('/([a-z]+)\\-([a-z]+)/', $mainLanguage, $m)) {
 			$retVal[] = $m[1];
 		}
 

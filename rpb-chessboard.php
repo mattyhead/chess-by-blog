@@ -27,37 +27,30 @@ Text Domain: rpbchessboard
 Author: Yoann Le Montagner
 Author URI: http://yo35.org/
 License: GPLv3
-Version: 3.2
+Version: 3.2.1
 */
 
 
 // Directories
-define('RPBCHESSBOARD_PLUGIN_DIR', basename(dirname(__FILE__)));
-define('RPBCHESSBOARD_ABSPATH'   , ABSPATH.'wp-content/plugins/'.RPBCHESSBOARD_PLUGIN_DIR.'/');
-define('RPBCHESSBOARD_URL'       , site_url().'/wp-content/plugins/'.RPBCHESSBOARD_PLUGIN_DIR);
+define('RPBCHESSBOARD_ABSPATH', plugin_dir_path(__FILE__));
+define('RPBCHESSBOARD_URL'    , plugin_dir_url(__FILE__));
 
 
 // Enable localization
-load_plugin_textdomain('rpbchessboard', false, RPBCHESSBOARD_PLUGIN_DIR . '/languages/');
+load_plugin_textdomain('rpbchessboard', false, basename(dirname(__FILE__)) . '/languages');
 
 
 // MVC loading tools
 require_once(RPBCHESSBOARD_ABSPATH . 'helpers/loader.php');
 
 
-// JavaScript
-add_action(is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts', 'rpbchessboard_init_scripts');
-function rpbchessboard_init_scripts()
+// JavaScript & CSS
+add_action(is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts', 'rpbchessboard_init_js_css');
+function rpbchessboard_init_js_css()
 {
 	require_once(RPBCHESSBOARD_ABSPATH . 'wp/scripts.php');
 	RPBChessboardScripts::register();
-}
 
-
-// CSS
-add_action(is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts', 'rpbchessboard_init_style_sheets');
-function rpbchessboard_init_style_sheets()
-{
 	require_once(RPBCHESSBOARD_ABSPATH . 'wp/stylesheets.php');
 	RPBChessboardStyleSheets::register();
 }
