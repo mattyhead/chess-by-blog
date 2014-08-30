@@ -27,13 +27,13 @@ Text Domain: rpbchessboard
 Author: Yoann Le Montagner
 Author URI: http://yo35.org/
 License: GPLv3
-Version: 3.2.1
+Version: 3.2.2
 */
 
 
 // Directories
 define('RPBCHESSBOARD_ABSPATH', plugin_dir_path(__FILE__));
-define('RPBCHESSBOARD_URL'    , plugin_dir_url(__FILE__));
+define('RPBCHESSBOARD_URL'    , plugin_dir_url (__FILE__));
 
 
 // Enable localization
