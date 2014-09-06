@@ -1,8 +1,8 @@
 === RPB Chessboard ===
 Contributors: yo35
 Tags: chess, chessboard, fen, pgn, games
-Requires at least: 2.6
-Tested up to: 3.9.2
+Requires at least: 3.9
+Tested up to: 4.0
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -93,6 +93,11 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 
 == Changelog ==
+
+= 3.3 (September 6, 2014) =
+* Dutch translation (thanks to Ivan Deceuninck).
+* Tested up to WordPress 4.0.
+* Minor fixes.
 
 = 3.2.3 (August 30, 2014) =
 * Fix issue with occurring with `[pgn][/pgn]` tags in non-post/page contexts.
