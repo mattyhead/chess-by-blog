@@ -1,4 +1,3 @@
-<?php
 /******************************************************************************
  *                                                                            *
  *    This file is part of RPB Chessboard, a Wordpress plugin.                *
@@ -20,32 +19,58 @@
  ******************************************************************************/
 
 
-require_once(RPBCHESSBOARD_ABSPATH.'models/abstract/abstractmodel.php');
-
-
 /**
- * Model for the custom buttons in the text editors.
+ * Register the chess edition function in the QuickTags framework.
+ *
+ * @requires backend.js
  */
-class RPBChessboardModelEditors extends RPBChessboardAbstractModel
+(function(RPBChessboard)
 {
-	private $quicktagsLoaded;
+	'use strict';
 
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->loadTrait('Compatibility');
+	// Skip if QuickTags is not defined.
+	if(/* global QTags */ typeof QTags === 'undefined') {
+		return;
 	}
 
 
 	/**
-	 * Whether the Quicktags API is loaded or not.
+	 * Callback for the edit-FEN dialog.
 	 */
-	public function isQuicktagsLoaded()
-	{
-		if(!isset($this->quicktagsLoaded)) {
-			$this->quicktagsLoaded = wp_script_is('quicktags');
-		}
-		return $this->quicktagsLoaded;
+	function editFENDialogCallback(fen, options) {
+		QTags.insertContent(RPBChessboard.serializeFENShortcodeContent(fen, options));
 	}
-}
+
+
+	/**
+	 * Callback for the edit-FEN button.
+	 */
+	function editFENButtonCallback(button, canvas)
+	{
+		var info = RPBChessboard.identifyFENShortcodeContent(canvas.value, canvas.selectionStart, canvas.selectionEnd);
+		if(info === null) {
+			RPBChessboard.showEditFENDialog(editFENDialogCallback);
+		}
+		else {
+			canvas.selectionStart = info.beginShortcode;
+			canvas.selectionEnd   = info.endShortcode;
+			RPBChessboard.showEditFENDialog({
+				fen     : info.fen,
+				options : info.options,
+				callback: editFENDialogCallback
+			});
+		}
+	}
+
+
+	// Register the edit-FEN button.
+	QTags.addButton(
+		'rpbchessboard-editFENButton',
+		RPBChessboard.i18n.EDITOR_BUTTON_LABEL,
+		editFENButtonCallback,
+		null, null,
+		RPBChessboard.i18n.EDIT_CHESS_DIAGRAM_DIALOG_TITLE
+	);
+
+})( /* global RPBChessboard */ RPBChessboard );

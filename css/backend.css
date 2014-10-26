@@ -19,8 +19,9 @@
  ******************************************************************************/
 
 
-/******************************************************************************/
-/*** Vertical spacing ***/
+/* -------------------------------------------------------------------------- */
+/* Vertical spacing */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-columns,
 div.rpbchessboard-sourceCode,
@@ -54,8 +55,9 @@ div.rpbchessboard-sourceCode:last-child,
 
 
 
-/******************************************************************************/
-/*** Bullet lists ***/
+/* -------------------------------------------------------------------------- */
+/* Bullet lists */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-adminPage ul {
 	list-style: square outside;
@@ -69,16 +71,17 @@ div.rpbchessboard-sourceCode:last-child,
 
 
 
-/******************************************************************************/
-/*** Column layout ***/
+/* -------------------------------------------------------------------------- */
+/* Column layout */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-columns {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	flex-direction: row;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
 }
 
 .rpbchessboard-columns > div {
@@ -94,10 +97,17 @@ div.rpbchessboard-sourceCode:last-child,
 	margin-right: 0px;
 }
 
+.rpbchessboard-columns .rpbchessboard-stretchable {
+	flex-grow: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex-grow: 1;
+}
 
 
-/******************************************************************************/
-/*** Floating objects ***/
+
+/* -------------------------------------------------------------------------- */
+/* Floating objects */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-floatLeft {
 	float: left;
@@ -118,8 +128,9 @@ div.rpbchessboard-sourceCode:last-child,
 
 
 
-/******************************************************************************/
-/*** Sub-page selector ***/
+/* -------------------------------------------------------------------------- */
+/* Sub-page selector */
+/* -------------------------------------------------------------------------- */
 
 #rpbchessboard-subPageSelector {
 	float: none;
@@ -136,8 +147,9 @@ div.rpbchessboard-sourceCode:last-child,
 
 
 
-/******************************************************************************/
-/*** Source code and visualization blocks ***/
+/* -------------------------------------------------------------------------- */
+/* Source code and visualization blocks */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-sourceCode {
 	font-family: Consolas, Monaco, monospace;
@@ -180,8 +192,9 @@ div.rpbchessboard-sourceCode {
 
 
 
-/******************************************************************************/
-/*** jQuery tabs (with no theme) ***/
+/* -------------------------------------------------------------------------- */
+/* jQuery tabs (with no theme) */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-tabs.ui-tabs .ui-tabs-panel {
 	border: solid 1px #ddd;
@@ -202,8 +215,47 @@ div.rpbchessboard-sourceCode {
 
 
 
-/******************************************************************************/
-/*** Memo page ***/
+/* -------------------------------------------------------------------------- */
+/* Icons */
+/* -------------------------------------------------------------------------- */
+
+.button.rpbchessboard-graphicButton {
+	height: auto;
+	padding: 4px;
+}
+
+.rpbchessboard-startPositionIcon {
+	width : 48px;
+	height: 48px;
+	background-image: url(../images/board-start.png);
+}
+
+.rpbchessboard-emptyPositionIcon {
+	width : 48px;
+	height: 48px;
+	background-image: url(../images/board-empty.png);
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Customize jQuery */
+/* -------------------------------------------------------------------------- */
+
+.ui-front {
+	z-index: 100000;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-accordion.ui-accordion .ui-accordion-content {
+	padding-left: 1.25em;
+	padding-right: 1.25em;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Memo page */
+/* -------------------------------------------------------------------------- */
 
 #rpbchessboard-memoPage {
 	margin-top: 1em;
@@ -215,8 +267,9 @@ div.rpbchessboard-sourceCode {
 
 
 
-/******************************************************************************/
-/*** Options page ***/
+/* -------------------------------------------------------------------------- */
+/* Options page */
+/* -------------------------------------------------------------------------- */
 
 #rpbchessboard-optionPage .rpbchessboard-columns > div:first-child {
 	width: 250px;
@@ -287,8 +340,9 @@ div.rpbchessboard-sourceCode {
 
 
 
-/******************************************************************************/
-/*** Help pages ***/
+/* -------------------------------------------------------------------------- */
+/* Help pages */
+/* -------------------------------------------------------------------------- */
 
 #rpbchessboard-helpFENPage .rpbchessboard-columns > div,
 #rpbchessboard-helpPGNPage .rpbchessboard-columns > div {
@@ -305,8 +359,9 @@ div.rpbchessboard-sourceCode {
 
 
 
-/******************************************************************************/
-/*** About page ***/
+/* -------------------------------------------------------------------------- */
+/* About page */
+/* -------------------------------------------------------------------------- */
 
 .rpbchessboard-translatorList {
 	display: flex;
@@ -343,44 +398,64 @@ div.rpbchessboard-sourceCode {
 
 
 
-/******************************************************************************/
-/*** Edit FEN dialog ***/
+/* -------------------------------------------------------------------------- */
+/* Edit FEN dialog */
+/* -------------------------------------------------------------------------- */
 
-.rpbchessboard-editFen-invisible {
-	display: none;
+.rpbchessboard-editFENDialog-sectionTitle,
+.rpbchessboard-editFENDialog-sectionContent {
+	font-size: 13px;
+	line-height: 1.5em;
 }
 
-#rpbchessboard-editFen-castleRights {
-	text-align: center;
-	table-layout: fixed;
-	margin-top: 5px;
+.rpbchessboard-editFENDialog-sectionTitle {
+	font-weight: bold;
 }
 
-#rpbchessboard-editFen-castleRights td {
+* + .rpbchessboard-editFENDialog-sectionContent {
+	margin-top: 0.3em;
+}
+
+.rpbchessboard-editFENDialog-sectionContent + .rpbchessboard-editFENDialog-sectionTitle {
+	margin-top: 1.3em;
+}
+
+.rpbchessboard-editFENDialog-turnField {
+	display: inline-block;
+}
+
+.rpbchessboard-editFENDialog-turnField + .rpbchessboard-editFENDialog-turnField,
+.rpbchessboard-editFENDialog-sectionContent .button + .button {
+	margin-left: 16px;
+}
+
+.rpbchessboard-editFENDialog-turnFlag {
+	display: inline-block;
 	vertical-align: middle;
+}
+
+#rpbchessboard-editFENDialog-flip {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#rpbchessboard-editFENDialog-castleRights td {
+	vertical-align: middle;
+	text-align: center;
 	padding: 0px 5px 0px;
 }
 
-#rpbchessboard-editFen-fenArea {
-	margin: 0px 10px;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+#rpbchessboard-editFENDialog-castleRights input[type="checkbox"] {
+	margin: 0px;
 }
 
-#rpbchessboard-editFen-fenArea > span {
-	margin-right: 5px;
+#rpbchessboard-editFENDialog-enPassantRights {
+	list-style-type: none;
 }
 
-#rpbchessboard-editFen-fenArea > input {
-	width: 100%;
-}
-
-.rpbchessboard-editFen-turnFlag {
-	display: inline-block;
-	vertical-align: middle;
+#rpbchessboard-editFENDialog-enPassantRights,
+#rpbchessboard-editFENDialog-enPassantRights li,
+#rpbchessboard-editFENDialog-enPassantRights input[type="radio"] {
+	margin-top: 0px;
+	margin-bottom: 0px;
 }

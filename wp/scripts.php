@@ -30,7 +30,7 @@ abstract class RPBChessboardScripts
 {
 	public static function register()
 	{
-		$ext = WP_DEBUG ? '.js' : '.min.js';
+		$ext = self::getJSFileExtension();
 
 		// chess.js (https://github.com/jhlywa/chess.js)
 		wp_register_script('rpbchessboard-chessjs', RPBCHESSBOARD_URL . 'third-party-libs/chess-js/chess' . $ext);
@@ -48,9 +48,7 @@ abstract class RPBChessboardScripts
 		wp_register_script('rpbchessboard-chessboard', RPBCHESSBOARD_URL . 'js/uichess-chessboard' . $ext, array(
 			'rpbchessboard-chessjs',
 			'jquery-ui-widget',
-			'jquery-ui-selectable',
-			'jquery-ui-draggable', // TODO: remove this dependency (only used by the editors)
-			'jquery-ui-droppable'  // TODO: remove this dependency (only used by the editors)
+			'jquery-ui-selectable'
 		));
 
 		// Chessgame widget
@@ -64,6 +62,15 @@ abstract class RPBChessboardScripts
 			'jquery-ui-resizable'
 		));
 
+		// Plugin specific
+		wp_register_script('rpbchessboard-backend', RPBCHESSBOARD_URL . 'js/backend' . $ext, array(
+			'rpbchessboard-chessboard',
+			'jquery-ui-dialog',
+			'jquery-ui-accordion',
+			'jquery-ui-draggable',
+			'jquery-ui-droppable'
+		));
+
 		// Enqueue the scripts.
 		wp_enqueue_script('rpbchessboard-chessboard');
 		wp_enqueue_script('rpbchessboard-chessgame' );
@@ -72,16 +79,56 @@ abstract class RPBChessboardScripts
 		if(is_admin()) {
 			wp_enqueue_script('jquery-ui-slider');
 			wp_enqueue_script('jquery-ui-tabs'  );
+			wp_enqueue_script('rpbchessboard-backend');
 		}
 
 		// Inlined scripts
 		add_action(is_admin() ? 'admin_print_footer_scripts' : 'wp_print_footer_scripts', array(__CLASS__, 'callbackInlinedScripts'));
+
+		// TinyMCE editor
+		add_filter('mce_external_plugins', array(__CLASS__, 'callbackRegisterTinyMCEPlugin'));
+		add_filter('mce_buttons', array(__CLASS__, 'callbackRegisterTinyMCEButtons'));
+
+		// QuickTags editor
+		add_action('admin_print_footer_scripts', array(__CLASS__, 'callbackRegisterQuickTagsButtons'));
 	}
 
 
 	public static function callbackInlinedScripts()
 	{
+		$compatibility = RPBChessboardHelperLoader::loadTrait('Compatibility');
 		include(RPBCHESSBOARD_ABSPATH . 'templates/localization.php');
+	}
+
+
+	public static function callbackRegisterTinyMCEPlugin($plugins)
+	{
+		$plugins['RPBChessboard'] = RPBCHESSBOARD_URL . 'js/tinymce' . self::getJSFileExtension();
+		return $plugins;
+	}
+
+	public static function callbackRegisterTinyMCEButtons($buttons)
+	{
+		array_push($buttons, 'rpb-chessboard');
+		return $buttons;
+	}
+
+
+	public static function callbackRegisterQuickTagsButtons()
+	{
+		$url = RPBCHESSBOARD_URL . 'js/quicktags' . self::getJSFileExtension();
+		echo '<script type="text/javascript" src="' . $url . '"></script>';
+	}
+
+
+	/**
+	 * Return the extension to use for the included JS files.
+	 *
+	 * @return string
+	 */
+	private static function getJSFileExtension()
+	{
+		return WP_DEBUG ? '.js' : '.min.js';
 	}
 
 
