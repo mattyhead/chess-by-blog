@@ -39,8 +39,8 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 [Black "Magnus Carlsen"]
 [Result "0-1"]
 
-1. e4 Nc6 2. Nf3 d5 3. Bd3 Nf6 4. exd5 Qxd5 5. Nc3 Qh5 6. O-O Bg4 7. h3 Ne5
-8. hxg4 Nfxg4 9. Nxe5 Qh2# 0-1
+1. e4 Nc6 2. Nf3 d5 3. Bd3 Nf6 4. exd5 Qxd5 5. Nc3 Qh5 6. O-O Bg4
+7. h3 Ne5 8. hxg4 Nfxg4 9. Nxe5 Qh2# 0-1
 
 [/pgn]
 `
@@ -93,6 +93,9 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 
 == Changelog ==
+
+= 3.4.1 (November 17, 2014) =
+* Fix localization not working on frontend.
 
 = 3.4 (October 26, 2014) =
 * Refactor edit-FEN dialog and make it available in TinyMCE editor.
