@@ -1,7 +1,7 @@
 /******************************************************************************
  *                                                                            *
- *    This file is part of RPB Chessboard, a Wordpress plugin.                *
- *    Copyright (C) 2013-2014  Yoann Le Montagner <yo35 -at- melix.net>       *
+ *    This file is part of RPB Chessboard, a WordPress plugin.                *
+ *    Copyright (C) 2013-2015  Yoann Le Montagner <yo35 -at- melix.net>       *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -1257,7 +1257,23 @@
 
 		// Callback for the buttons.
 		function callback(methodName) {
-			$('#uichess-chessgame-navigationFrameTarget').closest('.uichess-chessgame').chessgame(methodName);
+			var gameWidget = $('#uichess-chessgame-navigationFrameTarget').closest('.uichess-chessgame');
+			gameWidget.chessgame(methodName);
+
+			// Scroll to the selected move.
+			var target = $('.uichess-chessgame-selectedMove', gameWidget);
+			var allowScrollDown = true;
+			if(target.hasClass('uichess-chessgame-initialMove')) {
+				target = gameWidget;
+				allowScrollDown = false;
+			}
+			var targetOffset = target.offset();
+			if(targetOffset.top < $(window).scrollTop()) {
+				$('html, body').animate({ scrollTop: targetOffset.top }, 200);
+			}
+			else if(allowScrollDown && targetOffset.top + target.height() > $(window).scrollTop() + window.innerHeight) {
+				$('html, body').animate({ scrollTop: targetOffset.top + target.height() - window.innerHeight }, 200);
+			}
 		}
 
 		// Create the buttons.
