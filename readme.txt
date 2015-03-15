@@ -20,11 +20,9 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 
 = Links =
 
- * **http://yo35.org/rpb-chessboard/**
- * https://github.com/yo35/rpb-chessboard (GitHub repository)
-
-[See the live demo](http://yo35.org/rpb-chessboard/live-demo/).
-[Ask for help or report a problem](https://github.com/yo35/rpb-chessboard/issues).
+* [Ask for help or report a problem](https://github.com/yo35/rpb-chessboard/issues)
+* [Live demo](http://yo35.org/rpb-chessboard/live-demo/)
+* [Source code (GitHub repository)](https://github.com/yo35/rpb-chessboard)
 
 = Examples =
 
@@ -93,6 +91,9 @@ please have a look to the general [plugin management page](http://codex.wordpres
 
 
 == Changelog ==
+
+= 3.5.1 (March 15, 2015) =
+* Fix: make `flip` attribute work on tag `[pgndiagram]` (see issue #32).
 
 = 3.5 (February 22, 2015) =
 * Add options to customize chessboard appearance on small-screen devices (see issue #26).
