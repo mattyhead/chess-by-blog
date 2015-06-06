@@ -2,7 +2,7 @@
 Contributors: yo35
 Tags: chess, chessboard, fen, pgn, games
 Requires at least: 3.9
-Tested up to: 4.2
+Tested up to: 4.2.2
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -48,6 +48,7 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
  * Customizable aspect for the chessboards (orientation, size, etc...).
  * Support comments and sub-variations in PGN-encoded games.
  * Support HTML formatting in PGN comments.
+ * Colored square and arrow markers.
  * Compatibility mode to avoid conflicts with the other plugins that use
    the `[fen][/fen]` and `[pgn][/pgn]` shortcodes too.
  * Graphical assistant to create and modify chess diagrams in the post/page editor.
@@ -111,6 +112,11 @@ Please [contact the author](mailto:yo35@melix.net) for this.
 
 
 == Changelog ==
+
+= 4.0 (June 6, 2015) =
+* Add support for square highlights and arrow (see issue #27).
+* Refactor the help pages.
+* Tested up to WordPress 4.2.2.
 
 = 3.6.2 (April 26, 2015) =
 * Add help on null moves.

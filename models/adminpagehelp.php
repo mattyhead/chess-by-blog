@@ -28,14 +28,74 @@ require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
  */
 class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPage
 {
+	private $squareSizeList;
+	private $pieceSymbolCustomValues;
+
+
 	public function __construct()
 	{
 		parent::__construct();
-		$this->loadTrait('Compatibility');
-		$this->loadTrait('URLs'         );
+		$this->loadTrait('Compatibility'   );
+		$this->loadTrait('DefaultOptionsEx');
+		$this->loadTrait('URLs'            );
 
 		// Create the sub-pages.
-		$this->addSubPage('helpfen', __('FEN diagram', 'rpbchessboard'), true);
-		$this->addSubPage('helppgn', __('PGN game'   , 'rpbchessboard'));
+		$this->addSubPage('helppgnsyntax', __('PGN game syntax', 'rpbchessboard'), true);
+		$this->addSubPage('helpfensyntax', __('FEN diagram syntax', 'rpbchessboard'));
+		$this->addSubPage('helppgnattributes', sprintf(__('%1$s[%3$s][/%3$s]%2$s tag attributes', 'rpbchessboard'),
+			'<span class="rpbchessboard-sourceCode">', '</span>', htmlspecialchars($this->getPGNShortcode())));
+		$this->addSubPage('helpfenattributes', sprintf(__('%1$s[%3$s][/%3$s]%2$s tag attributes', 'rpbchessboard'),
+			'<span class="rpbchessboard-sourceCode">', '</span>', htmlspecialchars($this->getFENShortcode())));
+	}
+
+
+	/**
+	 * Return the list of square size values to present as example.
+	 *
+	 * @return int[]
+	 */
+	public function getSquareSizeList()
+	{
+		if(!isset($this->squareSizeList)) {
+			$defaultSquareSize = $this->getDefaultSquareSize();
+			if($defaultSquareSize <= 24) {
+				$this->squareSizeList = array($defaultSquareSize, 35, 56);
+			}
+			else if($defaultSquareSize <= 48) {
+				$this->squareSizeList = array(16, $defaultSquareSize, 56);
+			}
+			else {
+				$this->squareSizeList = array(16, 35, $defaultSquareSize);
+			}
+		}
+		return $this->squareSizeList;
+	}
+
+
+	/**
+	 * Return the initial square size value to use for the square size attribute presentation section.
+	 */
+	public function getSquareSizeInitialExample()
+	{
+		return $this->getSquareSizeList()[1];
+	}
+
+
+	/**
+	 * Default value for the piece symbol custom fields.
+	 *
+	 * @param string $piece `'K'`, `'Q'`, `'R'`, `'B'`, `'N'`, `'P'`, or `null` to concatenate all the values.
+	 * @return string
+	 */
+	public function getPieceSymbolCustomValue($piece = null)
+	{
+		if(!isset($this->pieceSymbolCustomValues)) {
+			$this->pieceSymbolCustomValues = $this->getDefaultPieceSymbolCustomValues();
+			if(empty($this->pieceSymbolCustomValues)) {
+				$this->pieceSymbolCustomValues = array('K'=>'K', 'Q'=>'D', 'R'=>'T', 'B'=>'L', 'N'=>'S', 'P'=>'B');
+			}
+		}
+		$t = $this->pieceSymbolCustomValues;
+		return $piece===null ? $t['K'] . $t['Q'] . $t['R'] . $t['B'] . $t['N'] . $t['P'] : $t[$piece];
 	}
 }

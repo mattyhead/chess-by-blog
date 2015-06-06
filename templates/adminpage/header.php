@@ -42,12 +42,21 @@
 		<?php foreach($model->getSubPages() as $subPage): ?>
 
 			<li>
-				<a
-					href="<?php echo htmlspecialchars($subPage->link); ?>"
-					class="<?php if($subPage->selected) { echo 'current'; } ?>"
-				><?php echo htmlspecialchars($subPage->label); ?></a>
+				<a href="<?php echo $subPage->link; ?>" class="<?php if($subPage->selected) { echo 'current'; } ?>">
+					<?php echo $subPage->label; ?>
+				</a>
 			</li>
 
 		<?php endforeach; ?>
 	</ul>
 <?php endif; ?>
+
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$('.rpbchessboard-outline a').click(function(e) {
+			e.preventDefault();
+			var target = $(this).attr('href');
+			$('html').animate({ scrollTop: $(target).offset().top - 50 }, 500);
+		});
+	});
+</script>

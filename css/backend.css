@@ -72,6 +72,32 @@ div.rpbchessboard-sourceCode:last-child,
 
 
 /* -------------------------------------------------------------------------- */
+/* Tables */
+/* -------------------------------------------------------------------------- */
+
+.rpbchessboard-adminPage table {
+	border-collapse: collapse;
+}
+
+.rpbchessboard-adminPage table th,
+.rpbchessboard-adminPage table td {
+	border: solid 1px #555;
+	padding: 0.25em 0.5em 0.25em;
+}
+
+.rpbchessboard-adminPage table th {
+	background-color: #555;
+	color: white;
+	font-weight: bold;
+}
+
+.rpbchessboard-adminPage table td {
+	background-color: white;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
 /* Column layout */
 /* -------------------------------------------------------------------------- */
 
@@ -120,10 +146,10 @@ div.rpbchessboard-sourceCode:last-child,
 }
 
 .rpbchessboard-clearfix:after {
-		display: block;
-		visibility: hidden;
-		content: " ";
-		clear: both;
+	display: block;
+	visibility: hidden;
+	content: " ";
+	clear: both;
 }
 
 
@@ -148,7 +174,7 @@ div.rpbchessboard-sourceCode:last-child,
 
 
 /* -------------------------------------------------------------------------- */
-/* Source code and visualization blocks */
+/* Source code, visualization blocks, and screenshots */
 /* -------------------------------------------------------------------------- */
 
 .rpbchessboard-sourceCode {
@@ -190,27 +216,10 @@ div.rpbchessboard-sourceCode {
 	margin-bottom: 0px;
 }
 
-
-
-/* -------------------------------------------------------------------------- */
-/* jQuery tabs (with no theme) */
-/* -------------------------------------------------------------------------- */
-
-.rpbchessboard-tabs.ui-tabs .ui-tabs-panel {
-	border: solid 1px #ddd;
-	background: #fcfcfc;
-}
-
-.rpbchessboard-tabs.ui-tabs .ui-tabs-nav li {
-	border-top : solid 1px #ddd;
-	border-left: solid 1px #ddd;
-	border-right: solid 1px #ddd;
-	background: #eee;
-	cursor: pointer;
-}
-
-.rpbchessboard-tabs.ui-tabs .ui-tabs-nav li.ui-tabs-active {
-	background: #fcfcfc;
+.rpbchessboard-screenshot {
+	border: solid 1px #bbb;
+	box-shadow: 0px 0px 8px #888;
+	margin: 0.5em 0em;
 }
 
 
@@ -219,21 +228,100 @@ div.rpbchessboard-sourceCode {
 /* Icons */
 /* -------------------------------------------------------------------------- */
 
-.button.rpbchessboard-graphicButton {
-	height: auto;
-	padding: 4px;
-}
-
 .rpbchessboard-startPositionIcon {
-	width : 48px;
-	height: 48px;
+	width : 96px;
+	height: 96px;
 	background-image: url(../images/board-start.png);
 }
 
 .rpbchessboard-emptyPositionIcon {
-	width : 48px;
-	height: 48px;
+	width : 96px;
+	height: 96px;
 	background-image: url(../images/board-empty.png);
+}
+
+.rpbchessboard-undoIcon {
+	width : 32px;
+	height: 32px;
+	background-image: url(../images/undo.png);
+	/**
+	 * Source: http://findicons.com/icon/263268/undo
+	 * Author: MomentIcons <http://momentumdesignlab.com/>
+	 * License: Creative Commons Attribution [CC-BY]
+	 */
+}
+
+.rpbchessboard-redoIcon {
+	width : 32px;
+	height: 32px;
+	background-image: url(../images/redo.png);
+	/**
+	 * Source: http://findicons.com/icon/263449/redo
+	 * Author: MomentIcons <http://momentumdesignlab.com/>
+	 * License: Creative Commons Attribution [CC-BY]
+	 */
+}
+
+.rpbchessboard-deleteIcon {
+	width : 30px;
+	height: 30px;
+	background-image: url(../images/delete.png);
+	/**
+	 * Source: http://findicons.com/icon/263490/delete
+	 * Author: MomentIcons <http://momentumdesignlab.com/>
+	 * License: Creative Commons Attribution [CC-BY]
+	 */
+}
+
+.rpbchessboard-tickIcon {
+	display: inline-block;
+	width : 16px;
+	height: 16px;
+	background-image: url(../images/tick.png);
+	/**
+	 * Source: http://findicons.com/icon/263450/accept1
+	 * Author: MomentIcons <http://momentumdesignlab.com/>
+	 * License: Creative Commons Attribution [CC-BY]
+	 */
+}
+
+.rpbchessboard-squareMarkerGreenIcon,
+.rpbchessboard-squareMarkerRedIcon,
+.rpbchessboard-squareMarkerYellowIcon,
+.rpbchessboard-arrowMarkerGreenIcon,
+.rpbchessboard-arrowMarkerRedIcon,
+.rpbchessboard-arrowMarkerYellowIcon {
+	width : 30px;
+	height: 30px;
+}
+
+.rpbchessboard-squareMarkerGreenIcon  { background-image: url(../images/square-marker-g.png); }
+.rpbchessboard-squareMarkerRedIcon    { background-image: url(../images/square-marker-r.png); }
+.rpbchessboard-squareMarkerYellowIcon { background-image: url(../images/square-marker-y.png); }
+.rpbchessboard-arrowMarkerGreenIcon   { background-image: url(../images/arrow-marker-g.png); }
+.rpbchessboard-arrowMarkerRedIcon     { background-image: url(../images/arrow-marker-r.png); }
+.rpbchessboard-arrowMarkerYellowIcon  { background-image: url(../images/arrow-marker-y.png); }
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Tool-bar */
+/* -------------------------------------------------------------------------- */
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-toolbar {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: row;
+	-webkit-flex-direction: row;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-toolbarGroup {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	justify-content: space-between;
+	-webkit-justify-content: space-between;
 }
 
 
@@ -246,9 +334,48 @@ div.rpbchessboard-sourceCode {
 	z-index: 100000;
 }
 
-.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-accordion.ui-accordion .ui-accordion-content {
+.rpbchessboard-jQuery-enableSmoothness .ui-accordion .ui-accordion-content {
 	padding-left: 1.25em;
 	padding-right: 1.25em;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-graphicButton.ui-button {
+	height: auto;
+	border-radius: 8px;
+	padding: 2px 3px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-graphicButton.ui-button.ui-button-text-only .ui-button-text {
+	padding: 0px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-buttonSet .rpbchessboard-graphicButton.ui-button {
+	border-radius: 0px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-buttonRow:first-child .rpbchessboard-graphicButton.ui-button:first-of-type {
+	border-top-left-radius: 8px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-buttonRow:last-child .rpbchessboard-graphicButton.ui-button:first-of-type {
+	border-bottom-left-radius: 8px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-buttonRow:first-child .rpbchessboard-graphicButton.ui-button:last-of-type {
+	border-top-right-radius: 8px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-buttonRow:last-child .rpbchessboard-graphicButton.ui-button:last-of-type {
+	border-bottom-right-radius: 8px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-toolbar .ui-button {
+	margin-right: 0px;
+}
+
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-toolbar > * + *,
+.rpbchessboard-jQuery-enableSmoothness .rpbchessboard-toolbar .rpbchessboard-toolbarGroup .ui-button + .ui-button {
+   margin-left: 8px;
 }
 
 
@@ -351,18 +478,41 @@ div.rpbchessboard-sourceCode {
 /* Help pages */
 /* -------------------------------------------------------------------------- */
 
-#rpbchessboard-helpFENPage .rpbchessboard-columns > div,
-#rpbchessboard-helpPGNPage .rpbchessboard-columns > div {
+.rpbchessboard-helpPage * + h3 {
+	margin: 2em 0px 1em;
+}
+
+ol.rpbchessboard-outline {
+	display: inline-block;
+	border: 1px solid #ddd;
+	background-color: white;
+	padding: 1em 2em 1.25em 1.5em;
+	list-style-position: inside;
+	margin-left: 0px;
+}
+
+ol.rpbchessboard-outline li:last-child {
+	margin-bottom: 0px;
+}
+
+table.rpbchessboard-attributeTable {
+	width: 100%;
+}
+
+table.rpbchessboard-attributeTable td:nth-child(2) {
+	text-align: center;
+	padding: 3px 0px 0px;
+}
+
+.rpbchessboard-helpPage .rpbchessboard-columns > div {
 	width: 50%;
 }
 
-#rpbchessboard-helpFENPage #rpbchessboard-fenAttribute2 .rpbchessboard-columns > div:nth-child(1) {
-	width: 33%;
-}
+#rpbchessboard-pgnAttributeNavigationBoard-content.rpbchessboard-columns > div:nth-child(1) { width: 40%; }
+#rpbchessboard-pgnAttributeNavigationBoard-content.rpbchessboard-columns > div:nth-child(2) { width: 60%; }
 
-#rpbchessboard-helpFENPage #rpbchessboard-fenAttribute2 .rpbchessboard-columns > div:nth-child(2) {
-	width: 67%;
-}
+#rpbchessboard-fenAttributeSquareSize-content.rpbchessboard-columns > div:nth-child(1) { width: 35%; }
+#rpbchessboard-fenAttributeSquareSize-content.rpbchessboard-columns > div:nth-child(2) { width: 65%; }
 
 
 
@@ -409,6 +559,44 @@ div.rpbchessboard-sourceCode {
 /* Edit FEN dialog */
 /* -------------------------------------------------------------------------- */
 
+#rpbchessboard-editFENDialog-addPiecesSelector .ui-button.ui-state-active,
+#rpbchessboard-editFENDialog-turnSelector .ui-button.ui-state-active,
+#rpbchessboard-editFENDialog-addSquareMarkersSelector .ui-button.ui-state-active,
+#rpbchessboard-editFENDialog-addArrowMarkersSelector .ui-button.ui-state-active {
+	box-shadow: 0px 0px 2px 3px #5b9dd9 inset;
+}
+
+#rpbchessboard-editFENDialog-undo,
+#rpbchessboard-editFENDialog-redo {
+	padding: 4px 7px;
+}
+
+#rpbchessboard-editFENDialog-flipSelector {
+	padding-bottom: 0.2em;
+}
+
+#rpbchessboard-editFENDialog-flip {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#rpbchessboard-editFENDialog-chessboard {
+	margin-top: 20px;
+}
+
+.rpbchessboard-editFENDialog-buttonColumn {
+	text-align: center;
+}
+
+.rpbchessboard-editFENDialog-buttonColumn div + div {
+	margin-top: 12px;
+}
+
+#rpbchessboard-editFENDialog-startPosition,
+#rpbchessboard-editFENDialog-emptyPosition {
+	padding: 8px 20px;
+}
+
 .rpbchessboard-editFENDialog-sectionTitle,
 .rpbchessboard-editFENDialog-sectionContent {
 	font-size: 13px;
@@ -439,11 +627,6 @@ div.rpbchessboard-sourceCode {
 .rpbchessboard-editFENDialog-turnFlag {
 	display: inline-block;
 	vertical-align: middle;
-}
-
-#rpbchessboard-editFENDialog-flip {
-	margin-top: 0px;
-	margin-bottom: 0px;
 }
 
 #rpbchessboard-editFENDialog-castleRights td {

@@ -38,17 +38,6 @@ class RPBChessboardModelShortcodeFEN extends RPBChessboardAbstractModelShortcode
 
 
 	/**
-	 * Return the FEN string describing the position.
-	 *
-	 * @return string
-	 */
-	public function getFENString()
-	{
-		return $this->getContent();
-	}
-
-
-	/**
 	 * Return the arguments to pass to the uichess-chessboard widget.
 	 *
 	 * @return array
@@ -56,8 +45,18 @@ class RPBChessboardModelShortcodeFEN extends RPBChessboardAbstractModelShortcode
 	public function getWidgetArgs()
 	{
 		if(!isset($this->widgetArgs)) {
-			$this->widgetArgs = array('position' => $this->getFENString());
+			$this->widgetArgs = array('position' => $this->getContent());
 			$atts = $this->getAttributes();
+
+			// Square markers
+			if(isset($atts['csl']) && is_string($atts['csl'])) {
+				$this->widgetArgs['squareMarkers'] = $atts['csl'];
+			}
+
+			// Arrow markers
+			if(isset($atts['cal']) && is_string($atts['cal'])) {
+				$this->widgetArgs['arrowMarkers'] = $atts['cal'];
+			}
 
 			// Orientation
 			$value = isset($atts['flip']) ? RPBChessboardHelperValidation::validateBoolean($atts['flip']) : null;

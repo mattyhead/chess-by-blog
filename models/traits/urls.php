@@ -50,23 +50,43 @@ class RPBChessboardTraitURLs extends RPBChessboardAbstractTrait
 
 
 	/**
-	 * URL to the attribute section of the FEN help page.
+	 * URL to the FEN attribute help page.
 	 *
 	 * @return string
 	 */
 	public function getHelpOnFENAttributesURL()
 	{
-		return admin_url('admin.php') . '?page=rpbchessboard-help&rpbchessboard_subpage=helpfen#rpbchessboard-helpOnFENAttributes';
+		return admin_url('admin.php') . '?page=rpbchessboard-help&rpbchessboard_subpage=helpfenattributes';
 	}
 
 
 	/**
-	 * URL to the attribute section of the PGN help page.
+	 * URL to the PGN attribute help page.
 	 *
 	 * @return string
 	 */
 	public function getHelpOnPGNAttributesURL()
 	{
-		return admin_url('admin.php') . '?page=rpbchessboard-help&rpbchessboard_subpage=helppgn#rpbchessboard-helpOnPGNAttributes';
+		return admin_url('admin.php') . '?page=rpbchessboard-help&rpbchessboard_subpage=helppgnattributes';
+	}
+
+
+	/**
+	 * URL to the FEN syntax help page.
+	 *
+	 * @return string
+	 */
+	public function getHelpOnFENSyntaxURL() {
+		return admin_url('admin.php') . '?page=rpbchessboard-help&rpbchessboard_subpage=helpfensyntax';
+	}
+
+
+	/**
+	 * URL to the PGN syntax help page.
+	 *
+	 * @return string
+	 */
+	public function getHelpOnPGNSyntaxURL() {
+		return admin_url('admin.php') . '?page=rpbchessboard-help&rpbchessboard_subpage=helppgnsyntax';
 	}
 }
