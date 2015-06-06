@@ -16,7 +16,7 @@ This plugin allows you to typeset and display chess diagrams and PGN-encoded che
 RPB Chessboard allows you to typeset and display chess games and diagrams
 in the posts and pages of your WordPress blog,
 using the standard [FEN](http://en.wikipedia.org/wiki/Forsyth-Edwards_Notation)
-and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations
+and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 
 = Links =
 
