@@ -19,59 +19,35 @@
  *                                                                            *
  ******************************************************************************/
 
-/*
-Plugin Name: RPB Chessboard
-Plugin URI: https://wordpress.org/plugins/rpb-chessboard/
-Description: This plugin allows you to typeset and display chess diagrams and PGN-encoded chess games.
-Text Domain: rpbchessboard
-Author: Yoann Le Montagner
-License: GPLv3
-Version: 4.0.1
-*/
+
+require_once(RPBCHESSBOARD_ABSPATH . 'models/traits/abstracttrait.php');
 
 
-// Directories
-define('RPBCHESSBOARD_ABSPATH', plugin_dir_path(__FILE__));
-define('RPBCHESSBOARD_URL'    , plugin_dir_url (__FILE__));
-
-
-// Enable localization
-load_plugin_textdomain('rpbchessboard', false, basename(dirname(__FILE__)) . '/languages');
-
-
-// MVC loading tools
-require_once(RPBCHESSBOARD_ABSPATH . 'helpers/loader.php');
-
-
-// JavaScript & CSS
-add_action(is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts', 'rpbchessboard_init_js_css');
-function rpbchessboard_init_js_css()
+/**
+ * Information about the plugin.
+ */
+class RPBChessboardTraitPluginInfo extends RPBChessboardAbstractTrait
 {
-	require_once(RPBCHESSBOARD_ABSPATH . 'wp/scripts.php');
-	RPBChessboardScripts::register();
-
-	require_once(RPBCHESSBOARD_ABSPATH . 'wp/stylesheets.php');
-	RPBChessboardStyleSheets::register();
-}
+	private static $pluginInfo;
 
 
-// Administration pages
-if(is_admin()) {
-	add_action('admin_menu', 'rpbchessboard_init_admin_pages');
-	function rpbchessboard_init_admin_pages()
-	{
-		require_once(RPBCHESSBOARD_ABSPATH . 'wp/adminpages.php');
-		RPBChessboardAdminPages::register();
+	/**
+	 * Current version of the plugin
+	 *
+	 * @return string
+	 */
+	public function getPluginVersion() {
+		self::loadPluginInfo();
+		return self::$pluginInfo['Version'];
 	}
-}
 
 
-// Shortcodes
-if(!is_admin()) {
-	add_action('init', 'rpbchessboard_init_shortcodes');
-	function rpbchessboard_init_shortcodes()
-	{
-		require_once(RPBCHESSBOARD_ABSPATH . 'wp/shortcodes.php');
-		RPBChessboardShortcodes::register();
+	/**
+	 * Load the information concerning the plugin.
+	 */
+	private static function loadPluginInfo() {
+		if(!isset(self::$pluginInfo)) {
+			self::$pluginInfo = get_plugin_data(RPBCHESSBOARD_ABSPATH . 'rpb-chessboard.php');
+		}
 	}
 }

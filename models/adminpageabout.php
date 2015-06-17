@@ -28,29 +28,8 @@ require_once(RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php');
  */
 class RPBChessboardModelAdminPageAbout extends RPBChessboardAbstractModelAdminPage
 {
-	private $pluginInfo;
-
-
-	/**
-	 * Current version of the plugin
-	 *
-	 * @return string
-	 */
-	public function getPluginVersion()
-	{
-		$this->loadPluginInfo();
-		return $this->pluginInfo['Version'];
-	}
-
-
-	/**
-	 * Load the information concerning the plugin.
-	 */
-	private function loadPluginInfo()
-	{
-		if($this->pluginInfo!=null) {
-			return;
-		}
-		$this->pluginInfo = get_plugin_data(RPBCHESSBOARD_ABSPATH . 'rpb-chessboard.php');
+	public function __construct() {
+		parent::__construct();
+		$this->loadTrait('PluginInfo');
 	}
 }
