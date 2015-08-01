@@ -21,7 +21,7 @@ and [PGN](http://en.wikipedia.org/wiki/Portable_Game_Notation) notations.
 = Links =
 
 * [Ask for help or report a problem](https://github.com/yo35/rpb-chessboard/issues)
-* [Live demo](http://yo35.org/rpb-chessboard/live-demo/)
+* [Live demo](http://rpb-chessboard.yo35.org/)
 * [Source code (GitHub repository)](https://github.com/yo35/rpb-chessboard)
 
 = Examples =
@@ -112,6 +112,9 @@ Please [contact the author](mailto:yo35@melix.net) for this.
 
 
 == Changelog ==
+
+= 4.1.2 (August 1, 2015) =
+* Fix arrow-head issue in Chrome (see #40).
 
 = 4.1.1 (July 27, 2015) =
 * Fix small-screen related issue (see #41).
