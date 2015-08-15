@@ -2,7 +2,7 @@
 Contributors: yo35
 Tags: chess, chessboard, fen, pgn, games
 Requires at least: 3.9
-Tested up to: 4.2.3
+Tested up to: 4.2.4
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -113,12 +113,17 @@ Please [contact the author](mailto:yo35@melix.net) for this.
 
 == Changelog ==
 
+= 4.1.3 (August 15, 2015) =
+* Fix click-on-image-not-working issue in IE (see #43).
+* Tested up to WordPress 4.2.4.
+
 = 4.1.2 (August 1, 2015) =
 * Fix arrow-head issue in Chrome (see #40).
 
 = 4.1.1 (July 27, 2015) =
 * Fix small-screen related issue (see #41).
 * Fix navigation frame sizing issue occurring with some themes.
+* Tested up to WordPress 4.2.3.
 
 = 4.1 (July 7, 2015) =
 * Add: option to get navigation board above/below the move list.
