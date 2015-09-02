@@ -2,7 +2,7 @@
 Contributors: yo35
 Tags: chess, chessboard, fen, pgn, games
 Requires at least: 3.9
-Tested up to: 4.2.4
+Tested up to: 4.3
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -112,6 +112,10 @@ Please [contact the author](mailto:yo35@melix.net) for this.
 
 
 == Changelog ==
+
+= 4.1.4 (September 2, 2015) =
+* Turkish translation (thanks to Ali Nihat Yazıcı).
+* Tested up to WordPress 4.3.
 
 = 4.1.3 (August 15, 2015) =
 * Fix click-on-image-not-working issue in IE (see #43).
