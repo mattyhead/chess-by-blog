@@ -57,9 +57,9 @@ abstract class RPBChessboardStyleSheets
 
 
 	public static function callbackInlinedStyleSheets() {
-		$model = RPBChessboardHelperLoader::loadTrait('SmallScreens');
+		$model = RPBChessboardHelperLoader::loadModel('Common/SmallScreensEx');
 		if($model->getSmallScreenCompatibility()) {
-			include(RPBCHESSBOARD_ABSPATH . 'templates/smallscreens.php');
+			RPBChessboardHelperLoader::printTemplate('SmallScreens', $model);
 		}
 	}
 }

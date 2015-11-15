@@ -25,13 +25,15 @@
 
 .rpbchessboard-columns,
 div.rpbchessboard-sourceCode,
-.rpbchessboard-tabs {
+.rpbchessboard-tabs,
+.rpbchessboard-slider {
 	margin: 1em 0px;
 }
 
 .rpbchessboard-columns:first-child,
 div.rpbchessboard-sourceCode:first-child,
 .rpbchessboard-tabs:first-child,
+.rpbchessboard-slider:first-child,
 .rpbchessboard-adminPage p:first-child {
 	margin-top: 0px;
 }
@@ -93,6 +95,25 @@ div.rpbchessboard-sourceCode:last-child,
 
 .rpbchessboard-adminPage table td {
 	background-color: white;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Buttons */
+/* -------------------------------------------------------------------------- */
+
+.rpbchessboard-adminPage .button.rpbchessboard-disabled {
+	color: #bbb;
+}
+
+.rpbchessboard-adminPage .button.rpbchessboard-disabled:hover,
+.rpbchessboard-adminPage .button.rpbchessboard-disabled:focus,
+.rpbchessboard-adminPage .button.rpbchessboard-disabled:active {
+	border-color: #ccc;
+	background-color: #f7f7f7;
+	cursor: default;
+	box-shadow: 0px 1px 0px #fff inset, 0px 1px 0px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -402,18 +423,25 @@ div.rpbchessboard-sourceCode {
 	margin: 2em 0px 1em;
 }
 
-#rpbchessboard-optionPage .rpbchessboard-columns > div:first-child {
+#rpbchessboard-optionPage #rpbchessboard-tuningChessboardParameterColumn {
 	width: 250px;
 }
 
-#rpbchessboard-optionPage .rpbchessboard-squareSizeField {
-	text-align: right;
+#rpbchessboard-optionPage #rpbchessboard-tuningMoveAnimationParameterColumn {
+	width: 500px;
 }
 
-#rpbchessboard-optionPage span.rpbchessboard-squareSizeSlider {
+#rpbchessboard-optionPage span.rpbchessboard-slider {
 	display: inline-block;
 	width: 240px;
 	margin-left: 3em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#rpbchessboard-optionPage .rpbchessboard-squareSizeField,
+#rpbchessboard-optionPage .rpbchessboard-animationSpeedField {
+	text-align: right;
 }
 
 #rpbchessboard-optionPage input[name="pieceSymbols"] {

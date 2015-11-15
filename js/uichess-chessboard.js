@@ -184,6 +184,17 @@
 
 
 	/**
+	 * Ensure that the given number is a valid animation spedd.
+	 *
+	 * @param {number} animationSpeed
+	 * @returns {number}
+	 */
+	function filterOptionAnimationSpeed(animationSpeed) {
+		return Math.max(0, animationSpeed);
+	}
+
+
+	/**
 	 * Initialize the internal `RPBChess.Position` object with the given FEN string.
 	 *
 	 * @param {uichess.chessboard} widget
@@ -355,6 +366,7 @@
 				'<marker id="uichess-chessboard-arrowMarkerEnd-G" markerWidth="4" markerHeight="4" refX="2.5" refY="2" orient="auto"><path d="M 4,2 L 0,4 L 1,2 L 0,0 Z" /></marker>' +
 				'<marker id="uichess-chessboard-arrowMarkerEnd-R" markerWidth="4" markerHeight="4" refX="2.5" refY="2" orient="auto"><path d="M 4,2 L 0,4 L 1,2 L 0,0 Z" /></marker>' +
 				'<marker id="uichess-chessboard-arrowMarkerEnd-Y" markerWidth="4" markerHeight="4" refX="2.5" refY="2" orient="auto"><path d="M 4,2 L 0,4 L 1,2 L 0,0 Z" /></marker>' +
+				'<marker id="uichess-chessboard-arrowMarkerEnd-B" markerWidth="4" markerHeight="4" refX="2.5" refY="2" orient="auto"><path d="M 4,2 L 0,4 L 1,2 L 0,0 Z" /></marker>' +
 			'</defs>';
 		for(var arrow in widget._arrowMarkers) {
 			if(widget._arrowMarkers.hasOwnProperty(arrow) && /^([a-h][1-8])([a-h][1-8])$/.test(arrow)) {
@@ -473,6 +485,27 @@
 
 
 	/**
+	 * Update the widget when all the square markers get changed.
+	 *
+	 * @param {uichess.chessboard} widget
+	 */
+	function onSquareMarkersChanged(widget) {
+		var oldSquareMarkers = $('.uichess-chessboard-squareMarker', widget.element);
+		oldSquareMarkers.removeClass('uichess-chessboard-markerColor-G');
+		oldSquareMarkers.removeClass('uichess-chessboard-markerColor-R');
+		oldSquareMarkers.removeClass('uichess-chessboard-markerColor-Y');
+		oldSquareMarkers.removeClass('uichess-chessboard-squareMarker');
+
+		for(var square in widget._squareMarkers) {
+			if(widget._squareMarkers.hasOwnProperty(square)) {
+				var color = widget._squareMarkers[square];
+				fetchSquare(widget, square).addClass('uichess-chessboard-squareMarker').addClass('uichess-chessboard-markerColor-' + color);
+			}
+		}
+	}
+
+
+	/**
 	 * Update the widget when an arrow marker gets added/changed/removed.
 	 *
 	 * @param {uichess.chessboard} widget
@@ -481,25 +514,66 @@
 	 * @param {string} newValue `undefined` if the square marker is removed.
 	 */
 	function onArrowMarkerChanged(widget, key, oldValue, newValue) {
+		var identifierClazz = 'uichess-chessboard-arrowMarker-' + key;
 		if(typeof oldValue === 'undefined') {
 			var fromSquare = key.substr(0, 2);
 			var toSquare = key.substr(2, 2);
 			if(fromSquare !== toSquare) {
 				var vc = getArrowCoordinatesInSVG(widget, fromSquare, toSquare);
-				var clazz = 'uichess-chessboard-arrowMarker uichess-chessboard-arrowMarker-' + key + ' uichess-chessboard-markerColor-' + newValue;
-				var marker = 'url(#uichess-chessboard-arrowMarkerEnd-' + newValue + ')';
-				var line = $(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
-				line.attr({ 'x1':vc.x1, 'y1':vc.y1, 'x2':vc.x2, 'y2':vc.y2, 'class':clazz, 'marker-end':marker });
-				$('.uichess-chessboard-annotations', widget.element).append(line);
+				doCreateArrow(widget, identifierClazz, newValue, vc.x1, vc.y1, vc.x2, vc.y2);
 			}
 		}
 		else if(typeof newValue === 'undefined') {
-			$('.uichess-chessboard-arrowMarker-' + key, widget.element).remove();
+			$(identifierClazz, widget.element).remove();
 		}
 		else {
-			var clazz = 'uichess-chessboard-arrowMarker uichess-chessboard-arrowMarker-' + key + ' uichess-chessboard-markerColor-' + newValue;
-			$('.uichess-chessboard-arrowMarker-' + key, widget.element).attr('class', clazz);
+			var clazz = 'uichess-chessboard-arrowMarker ' + identifierClazz + ' uichess-chessboard-markerColor-' + newValue;
+			$(identifierClazz, widget.element).attr('class', clazz);
 		}
+	}
+
+
+	/**
+	 * Update the widget when all the arrow markers get changed.
+	 *
+	 * @param {uichess.chessboard} widget
+	 */
+	function onArrowMarkersChanged(widget) {
+		$('.uichess-chessboard-arrowMarker', widget.element).remove();
+
+		for(var key in widget._arrowMarkers) {
+			if(widget._arrowMarkers.hasOwnProperty(key)) {
+				var fromSquare = key.substr(0, 2);
+				var toSquare = key.substr(2, 2);
+				if(fromSquare !== toSquare) {
+					var vc = getArrowCoordinatesInSVG(widget, fromSquare, toSquare);
+					var identifierClazz = 'uichess-chessboard-arrowMarker-' + key;
+					doCreateArrow(widget, identifierClazz, widget._arrowMarkers[key], vc.x1, vc.y1, vc.x2, vc.y2);
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * Create a DOM node corresponding to an arrow between the given squares.
+	 *
+	 * @param {uichess.chessboard} widget
+	 * @param {string} identifierClazz
+	 * @param {string} color
+	 * @param {number} x1
+	 * @param {number} y1
+	 * @param {number} x2
+	 * @param {number} y2
+	 * @returns {jQuery} The created arrow.
+	 */
+	function doCreateArrow(widget, identifierClazz, color, x1, y1, x2, y2) {
+		var clazz = 'uichess-chessboard-arrowMarker ' + identifierClazz + ' uichess-chessboard-markerColor-' + color;
+		var marker = 'url(#uichess-chessboard-arrowMarkerEnd-' + color + ')';
+		var line = $(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+		line.attr({ 'x1':x1, 'y1':y1, 'x2':x2, 'y2':y2, 'class':clazz, 'marker-end':marker });
+		$('.uichess-chessboard-annotations', widget.element).append(line);
+		return line;
 	}
 
 
@@ -613,9 +687,8 @@
 				var movingPiece = ui.draggable;
 				if(movingPiece.hasClass('uichess-chessboard-piece')) {
 					var move = { from: movingPiece.parent().data('square'), to: target.data('square') };
-					if(move.from !== move.to) {
-						dropCallback(widget, move, movingPiece, target);
-					}
+					dropCallback(widget, move, false, widget.options.showMoveArrow);
+					// TODO Handle promotions in drag & drop.
 				}
 			}
 		});
@@ -680,20 +753,16 @@
 				canvasOffset = canvas.offset();
 
 				// Create the temporary arrow marker.
-				var clazz = 'uichess-chessboard-arrowMarker uichess-chessboard-markerColor-' + markerColor;
-				var marker = 'url(#uichess-chessboard-arrowMarkerEnd-' + markerColor + ')';
 				var p = getSquareCoordinatesInSVG(widget, fromSquare);
-				var line = $(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
-				line.attr({ 'x1':p.x, 'y1':p.y, 'x2':p.x, 'y2':p.y, 'class':clazz, 'marker-end':marker, 'id':'uichess-chessboard-draggedArrowMarker' });
-				line.appendTo(canvas);
+				doCreateArrow(widget, 'uichess-chessboard-draggedArrow', markerColor, p.x, p.y, p.x, p.y);
 			},
 
 			drag: function(event) {
-				$('#uichess-chessboard-draggedArrowMarker').attr({ 'x2':xInCanvas(event.pageX), 'y2':yInCanvas(event.pageY) });
+				$('.uichess-chessboard-draggedArrow', widget.element).attr({ 'x2':xInCanvas(event.pageX), 'y2':yInCanvas(event.pageY) });
 			},
 
 			stop: function() {
-				$('#uichess-chessboard-draggedArrowMarker').remove();
+				$('.uichess-chessboard-draggedArrow', widget.element).remove();
 			}
 		});
 
@@ -720,16 +789,19 @@
 	 *
 	 * @param {uichess.chessboard} widget
 	 * @param {{from: string, to: string}} move The origin and destination squares.
-	 * @param {jQuery} movingPiece DOM node representing the moving piece.
-	 * @param {jQuery} target DOM node representing the destination square.
+	 * @param {boolean} animate
+	 * @param {boolean} withArrow
 	 */
-	function doMovePiece(widget, move, movingPiece, target) {
+	function doMovePiece(widget, move, animate, withArrow) {
+		if(move.from === move.to || widget._position.square(move.from) === '-') {
+			return;
+		}
 		widget._position.square(move.to, widget._position.square(move.from));
 		widget._position.square(move.from, '-');
 
 		// Update the DOM elements.
-		movingPiece.parent().append(HANDLE_TEMPLATE);
-		target.empty().append(movingPiece);
+		$('.uichess-chessboard-moveArrow', widget.element).remove();
+		doDisplacement(widget, move.from, move.to, animate, withArrow);
 
 		// FEN update + notifications.
 		notifyFENChanged(widget);
@@ -741,31 +813,24 @@
 	 * the special situations (promotion, castle, en-passant...) that may be encountered.
 	 *
 	 * @param {uichess.chessboard} widget
-	 * @param {{from: string, to: string}} move The origin and destination squares.
-	 * @param {jQuery} movingPiece DOM node representing the moving piece.
-	 * @param {jQuery} target DOM node representing the destination square.
+	 * @param {string|RPBChess.MoveDescriptor} move
+	 * @param {boolean} animate
+	 * @param {boolean} withArrow
 	 */
-	function doPlay(widget, move, movingPiece, target) {
+	function doPlay(widget, move, animate, withArrow) {
 		var moveDescriptor = widget._position.isMoveLegal(move);
-		if(moveDescriptor === false) {
-			move.promotion = 'q'; // TODO: allow other types of promoted pieces.
-			moveDescriptor = widget._position.isMoveLegal(move);
-			if(moveDescriptor === false) {
-				return;
-			}
+		if(!moveDescriptor) {
+			return;
 		}
 		widget._position.play(moveDescriptor);
 
 		// Move the moving piece to its destination square.
-		movingPiece.parent().append(HANDLE_TEMPLATE);
-		target.empty().append(movingPiece);
+		$('.uichess-chessboard-moveArrow', widget.element).remove();
+		var movingPiece = doDisplacement(widget, moveDescriptor.from(), moveDescriptor.to(), animate, withArrow);
 
 		// Castling move -> move the rook.
 		if(moveDescriptor.type() === RPBChess.movetype.CASTLING_MOVE) {
-			var rookFrom = fetchSquare(widget, moveDescriptor.rookFrom());
-			var rookTo   = fetchSquare(widget, moveDescriptor.rookTo());
-			rookFrom.append(HANDLE_TEMPLATE);
-			rookTo.empty().append($('.uichess-chessboard-piece', rookFrom));
+			doDisplacement(widget, moveDescriptor.rookFrom(), moveDescriptor.rookTo(), animate, false);
 		}
 
 		// En-passant move -> remove the taken pawn.
@@ -775,7 +840,11 @@
 
 		// Promotion move -> change the type of the promoted piece.
 		if(moveDescriptor.type() === RPBChess.movetype.PROMOTION) {
-			movingPiece.removeClass('uichess-chessboard-piece-p').addClass('uichess-chessboard-piece-' + moveDescriptor.promotion());
+
+			// Switch to the promoted piece when the animation is 80%-complete.
+			scheduleMoveAnimation(widget, animate, 0.8, function() {
+				movingPiece.removeClass('uichess-chessboard-piece-p').addClass('uichess-chessboard-piece-' + moveDescriptor.promotion());
+			});
 		}
 
 		// Switch the turn flag.
@@ -783,6 +852,57 @@
 
 		// FEN update + notifications.
 		notifyFENChanged(widget);
+	}
+
+
+	/**
+	 * Execute a move.
+	 *
+	 * @param {uichess.chessboard} widget
+	 * @param {string} from
+	 * @param {string} to
+	 * @param {boolean} animate
+	 * @param {boolean} withArrow
+	 * @returns {jQuery} DOM object corresponding to the moving piece.
+	 */
+	function doDisplacement(widget, from, to, animate, withArrow) {
+		var movingPiece = $('.uichess-chessboard-piece', fetchSquare(widget, from));
+		movingPiece.parent().append(HANDLE_TEMPLATE);
+		fetchSquare(widget, to).empty().append(movingPiece);
+
+		// Create the move arrow
+		if(withArrow) {
+			var vc = getArrowCoordinatesInSVG(widget, from, to);
+			scheduleMoveAnimation(widget, animate, 0.5, function() {
+				doCreateArrow(widget, 'uichess-chessboard-moveArrow', 'B', vc.x1, vc.y1, vc.x2, vc.y2);
+			});
+		}
+
+		// Animation
+		if(animate) {
+			var p1 = RPBChess.squareToCoordinates(from);
+			var p2 = RPBChess.squareToCoordinates(to  );
+			var deltaTop  = (p1.r - p2.r) * widget.options.squareSize * (widget.options.flip ? 1 : -1);
+			var deltaLeft = (p2.c - p1.c) * widget.options.squareSize * (widget.options.flip ? 1 : -1);
+			movingPiece.css('top', deltaTop + 'px');
+			movingPiece.css('left', deltaLeft + 'px');
+			movingPiece.animate({ top: '0px', left: '0px' }, widget.options.animationSpeed);
+		}
+
+		return movingPiece;
+	}
+
+
+	/**
+	 * Schedule an animation related to a move animation.
+	 */
+	function scheduleMoveAnimation(widget, animate, delayFactor, callback) {
+		if(animate) {
+			setTimeout(callback, widget.options.animationSpeed * delayFactor);
+		}
+		else {
+			callback();
+		}
 	}
 
 
@@ -966,6 +1086,16 @@
 			showCoordinates: true,
 
 			/**
+			 * Duration of the animations when playing moves (in milliseconds).
+			 */
+			animationSpeed: 200,
+
+			/**
+			 * Whether moves should be highlighted with an arrow or not.
+			 */
+			showMoveArrow: false,
+
+			/**
 			 * Whether the user can moves the pieces or not, edit the annotations or not, etc... Available values are:
 			 * * 'none': no move is allowed, drag & drop is disabled.
 			 * * 'play': only legal chess moves are allowed.
@@ -1009,8 +1139,10 @@
 			this.options.arrowMarkers  = initializeArrowMarkers (this, this.options.arrowMarkers );
 			this.options.squareSize      = filterOptionSquareSize     (this.options.squareSize     );
 			this.options.interactionMode = filterOptionInteractionMode(this.options.interactionMode);
+			this.options.animationSpeed  = filterOptionAnimationSpeed (this.options.animationSpeed );
 			this.options.flip            = filterBoolean(this.options.flip           , false);
 			this.options.showCoordinates = filterBoolean(this.options.showCoordinates, true );
+			this.options.showMoveArrow   = filterBoolean(this.options.showMoveArrow  , false);
 			refresh(this);
 		},
 
@@ -1035,8 +1167,10 @@
 				case 'arrowMarkers' : value = initializeArrowMarkers (this, value); break;
 				case 'squareSize'     : value = filterOptionSquareSize     (value); break;
 				case 'interactionMode': value = filterOptionInteractionMode(value); break;
+				case 'animationSpeed' : value = filterOptionAnimationSpeed (value); break;
 				case 'flip'           : value = filterBoolean(value, false); break;
 				case 'showCoordinates': value = filterBoolean(value, true ); break;
+				case 'showMoveArrow'  : value = filterBoolean(value, false); break;
 			}
 
 			// Set the new value.
@@ -1048,12 +1182,14 @@
 
 			// Update the widget.
 			switch(key) {
-				case 'position'     : refresh(this); this._trigger('positionChange'     , null, { oldValue:oldValue, newValue:this.options.position      }); break;
-				case 'squareMarkers': refresh(this); this._trigger('squareMarkersChange', null, { oldValue:oldValue, newValue:this.options.squareMarkers }); break;
-				case 'arrowMarkers' : refresh(this); this._trigger('arrowMarkersChange' , null, { oldValue:oldValue, newValue:this.options.arrowMarkers  }); break;
-				case 'flip'         : refresh(this); this._trigger('flipChange'         , null, { oldValue:oldValue, newValue:this.options.flip          }); break;
+				case 'position': refresh(this); this._trigger('positionChange', null, { oldValue:oldValue, newValue:this.options.position }); break;
+				case 'flip'    : refresh(this); this._trigger('flipChange'    , null, { oldValue:oldValue, newValue:this.options.flip     }); break;
+				case 'squareMarkers': onSquareMarkersChanged(this); this._trigger('squareMarkersChange', null, { oldValue:oldValue, newValue:this.options.squareMarkers }); break;
+				case 'arrowMarkers' : onArrowMarkersChanged (this); this._trigger('arrowMarkersChange' , null, { oldValue:oldValue, newValue:this.options.arrowMarkers  }); break;
 				case 'squareSize': onSquareSizeChanged(this, oldValue, value); break;
 				case 'showCoordinates': onShowCoordinatesChanged(this); break;
+				case 'animationSpeed': break;
+				case 'showMoveArrow' : break;
 				default: refresh(this); break;
 			}
 		},
@@ -1110,6 +1246,26 @@
 				this._position.enPassant(value);
 				notifyFENChanged(this);
 			}
+		},
+
+
+		/**
+		 * Move a piece from square `from` to square `to`.
+		 *
+		 * @param {{from: string, to: string}} move
+		 */
+		movePiece: function(move) {
+			doMovePiece(this, move, this.options.animationSpeed > 0, this.options.showMoveArrow);
+		},
+
+
+		/**
+		 * Play a legal move.
+		 *
+		 * @param {string|RPBChess.MoveDescriptor} move
+		 */
+		play: function(move) {
+			doPlay(this, move, this.options.animationSpeed > 0, this.options.showMoveArrow);
 		},
 
 

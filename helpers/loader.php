@@ -23,8 +23,8 @@
 /**
  * Helper functions for dynamic class loading.
  */
-abstract class RPBChessboardHelperLoader
-{
+abstract class RPBChessboardHelperLoader {
+
 	/**
 	 * Load the model corresponding to the given model name.
 	 *
@@ -32,10 +32,9 @@ abstract class RPBChessboardHelperLoader
 	 * @param mixed ... Arguments to pass to the model (optional).
 	 * @return object New instance of the model.
 	 */
-	public static function loadModel($modelName)
-	{
+	public static function loadModel($modelName) {
 		$fileName  = strtolower($modelName);
-		$className = 'RPBChessboardModel' . $modelName;
+		$className = 'RPBChessboardModel' . str_replace('/' , '', $modelName);
 		require_once(RPBCHESSBOARD_ABSPATH . 'models/' . $fileName . '.php');
 		if(func_num_args() === 1) {
 			return new $className;
@@ -49,40 +48,27 @@ abstract class RPBChessboardHelperLoader
 
 
 	/**
-	 * Load the trait corresponding to the given trait name.
+	 * Print the given template to the current output.
 	 *
-	 * @param string $traitName Name of the trait.
-	 * @param mixed ... Arguments to pass to the trait (optional).
-	 * @return object New instance of the trait.
+	 * @param string $templateName
+	 * @param object $model
 	 */
-	public static function loadTrait($traitName)
-	{
-		$fileName  = strtolower($traitName);
-		$className = 'RPBChessboardTrait' . $traitName;
-		require_once(RPBCHESSBOARD_ABSPATH . 'models/traits/' . $fileName . '.php');
-		if(func_num_args() === 1) {
-			return new $className;
-		}
-		else {
-			$args  = func_get_args();
-			$clazz = new ReflectionClass($className);
-			return $clazz->newInstanceArgs(array_slice($args, 1));
-		}
+	public static function printTemplate($templateName, $model) {
+		$filename = strtolower($templateName);
+		include(RPBCHESSBOARD_ABSPATH . 'templates/' . $filename . '.php');
 	}
 
 
 	/**
-	 * Load the view whose name is returned by `$model->getViewName()`.
+	 * Print the given template to a string.
 	 *
+	 * @param string $templateName
 	 * @param object $model
-	 * @return object New instance of the view.
+	 * @return string
 	 */
-	public static function loadView($model)
-	{
-		$viewName  = $model->getViewName();
-		$fileName  = strtolower($viewName);
-		$className = 'RPBChessboardView' . $viewName;
-		require_once(RPBCHESSBOARD_ABSPATH . 'views/' . $fileName . '.php');
-		return new $className($model);
+	public static function printTemplateOffScreen($templateName, $model) {
+		ob_start();
+		self::printTemplate($templateName, $model);
+		return ob_get_clean();
 	}
 }
